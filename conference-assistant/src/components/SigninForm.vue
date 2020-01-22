@@ -9,8 +9,8 @@
                <div></div>
                <button type="submit">Login</button>
                <div><p>비밀번호가 생각나지 않으세요?</p></div>
-               <button>Join</button>
-
+               <!-- <button>Join</button> -->
+                <button><router-link :to="{name:'Signup'}">Join</router-link></button>
            </fieldset>
        </form>
     </div>

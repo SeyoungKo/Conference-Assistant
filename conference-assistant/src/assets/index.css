@@ -68,7 +68,7 @@
  .sign-in-page {
    position: absolute;
    left: 50%;
-   top: 50%;
+   top: 40%;
    width: 480px;
    height: 530px;
    margin: -165px 0 0 -228px;
@@ -125,11 +125,13 @@
    background-color: #f7f7f8;
    color:#32a852;
    font-size: large;
+   text-decoration: none;
  }
  .sign-in-page form fieldset button:hover{
    background-color: #f7f7f8;
    color:#32a852;
    font-size: large;
+   text-decoration: none;
  }
 
  .sign-in-page > p {
@@ -140,12 +142,17 @@
  /**
   * 회원가입 페이지
   */
+
+ .sign-up-page h3{
+   margin-top: 18px;
+   font-size: 28px;
+ }
  .sign-up-page {
    position: absolute;
    left: 50%;
-   top: 50%;
-   width: 456px;
-   height: 396px;
+   top: 38%;
+   width: 560px;
+   height: 740px;
    margin: -186px 0 0 -228px;
    padding: 45px 60px 60px;
    background-color: #fff;
@@ -158,29 +165,71 @@
  .sign-up-page form fieldset input {
    margin-bottom: 8px;
  }
+ .sign-up-page span{
+   font-weight: bold;
+   color:#474c52;
+ }
+
  .sign-up-page form fieldset input[type="text"], .sign-up-page form fieldset input[type="password"], .sign-up-page form fieldset input[type="email"] {
-   width: 100%;
-   height: calc(1.5em + .75rem + 2px);
-   margin-bottom: 8px;
+   margin-top: 5px;
+   margin-left: 12%;
+   align-content: center;
+   width: 60%;
+   height: calc(1.5em + .75rem + 19px);
+   margin-bottom: 30px;
    padding: 5px 12px;
    color: #495057;
-   border: 1px solid #ced4da;
-   border-radius: .25rem;
+   border: 1px solid #d1d5d8;
+   border-radius: 1.1rem;
    font-size: 14px;
  }
- .sign-up-page form fieldset button[type="submit"] {
-   width: 100%;
-   margin: 16px 0 8px;
-   padding: .75rem;
-   font-size: 16px;
-   font-weight: bold;
-   color: #fff;
-   border-radius: .25rem;
-   background-color: #414141;
-   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+
+ .sign-up-page form fieldset input[type="password"]{
+   margin-left: 9%;
  }
+
+ .sign-up-page form fieldset input[type="email"]{
+  margin-left: 12%;
+}
+
+.sign-up-page form fieldset input.name{
+  margin-left: 15%;
+}
+
+.sign-up-page form fieldset input.tel{
+  margin-left: 9%;
+}
+
+.sign-up-page form fieldset input.confirm{
+  margin-left: 2%;
+  margin-top: -22px;
+}
+
+
+.sign-up-page button{
+  color:gray;
+  font-size: 13px;
+}
+
+ .sign-up-page form fieldset button[type="submit"] {
+  margin-top: 30px;
+  width: 70%;
+  margin-left: 13%;
+  margin-bottom: 1px;
+  padding: 1.2rem;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 1.7rem;
+  background-color: #32a852;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
  .sign-up-page form fieldset button[type="submit"]:hover {
-   background-color: #181818;
+  background-color: #f7f7f8;
+  color:#32a852;
+  font-size: large;
  }
  .sign-up-page > p {
    font-size: 16px;
