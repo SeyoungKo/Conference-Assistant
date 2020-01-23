@@ -110,8 +110,9 @@
     padding: 20px 10px;
   }
   p{
+    margin-left: -5%;
     text-align: center;
-    margin-top: -13%;
+    margin-top: -11%;
   }
   .btn-close {
     border: none;
@@ -132,8 +133,8 @@
 }
 
 button.btn-gray {
-    margin-top: 2px;
-    margin-left: 16%;
+    margin-top: -20px;
+    margin-left: 17%;
     height:39%;
     width:18%;
     background: rgb(173, 173, 173);
@@ -144,8 +145,8 @@ button.btn-gray {
     border-radius: 0.7rem;
   }
   button.btn-green {
-    margin-top: 2px;
-    margin-right: -80px;
+    margin-top: -20px;
+    margin-right: -175px;
     height:39%;
     width:18%;
     background: #32a852;

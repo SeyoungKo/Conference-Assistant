@@ -1,16 +1,24 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
 import Signin from '../pages/Signin'
 import Signup from '../pages/Signup'
-import Vodal from 'vodal'
+import TeamListPage from '../pages/TeamListPage'
+//헤더 컴포넌트
+import AppHeader from '../components/AppHeader'
 
-Vue.component(Vodal.name,Vodal)
 Vue.use(Router)
 
 export default new Router({
   mode : 'history',
   routes: [
+    {
+      path:'/teamlist',
+      name:'TeamListPage',
+      components:{
+        header : AppHeader,
+        default: TeamListPage
+      }
+    },
     {
       path: '/',
       name: 'Signin',

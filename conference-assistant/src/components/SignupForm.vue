@@ -32,6 +32,7 @@ export default {
             const {id, password, passwordConfirm, name, tel, email} = this
             if(!id || !password || !passwordConfirm || !name || !tel || !email){
                 alert('모든 항목을 입력해주세요.');
+                return;
             }
             if(password != passwordConfirm){
                 alert('비밀번호가 일치하지 않습니다.');
