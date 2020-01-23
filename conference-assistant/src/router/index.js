@@ -3,7 +3,9 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Signin from '../pages/Signin'
 import Signup from '../pages/Signup'
+import Vodal from 'vodal'
 
+Vue.component(Vodal.name,Vodal)
 Vue.use(Router)
 
 export default new Router({
