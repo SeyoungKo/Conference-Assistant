@@ -109,16 +109,19 @@
    background-color: #32a852;
    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
  }
- .sign-in-page form fieldset button {
-   width: 70%;
+ .sign-in-page form fieldset a {
+   float:left;
+   width: 60%;
    margin-left: 13%;
    margin-bottom: 1px;
    padding: 1.2rem;
-   font-size: 18px;
+   font-size: 19.5px;
    font-weight: bold;
+   text-align: center;
    color: #fff;
    border-radius: 1.7rem;
    background-color: #32a852;
+   text-decoration: none;
    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
  }
  .sign-in-page form fieldset button[type="submit"]:hover {
@@ -127,10 +130,16 @@
    font-size: large;
    text-decoration: none;
  }
- .sign-in-page form fieldset button:hover{
+ .sign-in-page a:hover{
+   width: 60%;
+   margin-left: 13%;
+   margin-bottom: 1px;
+   padding: 1.2rem;
+   text-align: center;
+   font-size: 19.5px;
+   font-weight: bold;
    background-color: #f7f7f8;
    color:#32a852;
-   font-size: large;
    text-decoration: none;
  }
 
