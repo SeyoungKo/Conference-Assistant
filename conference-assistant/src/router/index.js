@@ -12,17 +12,17 @@ export default new Router({
   mode : 'history',
   routes: [
     {
+      path: '/',
+      name: 'Signin',
+      component: Signin
+    },
+    {
       path:'/teamlist',
       name:'TeamListPage',
       components:{
         header : AppHeader,
         default: TeamListPage
       }
-    },
-    {
-      path: '/',
-      name: 'Signin',
-      component: Signin
     },
     {
       path:'/signup',
