@@ -1,7 +1,12 @@
 <template>
     <div class="app-header">
+<<<<<<< HEAD
      <img src="../img/dure_logo.png"><span>Dure</span>
      <router-link :to="{name:'Signin'}">로그아웃</router-link>
+=======
+        <h3>test</h3>
+
+>>>>>>> frontend
     </div>
 </template>
 <script>
@@ -15,6 +20,7 @@ export default {
    top: 0;
    left: 0;
    width: 100%;
+<<<<<<< HEAD
    height: 70px;
    border-bottom: 1px solid #ededed;
    background-color: rgb(255, 255, 255);
@@ -36,5 +42,10 @@ a{
    margin-top: 30px;
    margin-left: 90%;
    color:rgb(31, 31, 31);
+=======
+   height: 60px;
+   border-bottom: 1px solid #ededed;
+   background-color: rgb(250, 248, 248);
+>>>>>>> frontend
 }
 </style>

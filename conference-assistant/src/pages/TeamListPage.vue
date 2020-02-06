@@ -1,6 +1,9 @@
 <template>
     <div class="team-list-page">
+<<<<<<< HEAD
         <AppHeader/>
+=======
+>>>>>>> frontend
         <img src="../img/profile.png"><span>user1</span>
         <p>user1@google.com</p>
         <TeamList/>
@@ -8,12 +11,19 @@
 </template>
 <script>
 import TeamList from '../components/TeamList'
+<<<<<<< HEAD
 import AppHeader from '../components/AppHeader'
 export default {
     name:'TeamListPage',
     components:{
         TeamList,
         AppHeader
+=======
+export default {
+    name:'TeamListPage',
+    components:{
+        TeamList
+>>>>>>> frontend
     }
 }
 </script>

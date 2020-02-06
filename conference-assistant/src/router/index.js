@@ -12,11 +12,14 @@ export default new Router({
   mode : 'history',
   routes: [
     {
+<<<<<<< HEAD
       path: '/',
       name: 'Signin',
       component: Signin
     },
     {
+=======
+>>>>>>> frontend
       path:'/teamlist',
       name:'TeamListPage',
       components:{
@@ -25,6 +28,14 @@ export default new Router({
       }
     },
     {
+<<<<<<< HEAD
+=======
+      path: '/',
+      name: 'Signin',
+      component: Signin
+    },
+    {
+>>>>>>> frontend
       path:'/signup',
       name: 'Signup',
       component: Signup
