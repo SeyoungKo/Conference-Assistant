@@ -13,7 +13,13 @@ export default {
     },
     methods:{
         onSubmit(){
-            this.$router.push({name:'Signin'})
+            const {id, password, name, tel, email} = payload
+
+            api.post('/auth/signup',{id, password, name, tel, email}).then(res=>{
+                 this.$router.push({name:'Signin'})
+            }).catch(err=>{
+                alert(err.response.data.msg) // 서버 오류
+            })
         }
     }
 }
