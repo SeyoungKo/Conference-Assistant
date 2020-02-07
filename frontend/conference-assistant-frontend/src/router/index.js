@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Signin from '../pages/Signin'
 import Signup from '../pages/Signup'
 import TeamListPage from '../pages/TeamListPage'
+import MainPage from '../pages/MainPage'
+import SidebarMenu from '../components/SidebarMenu'
 //헤더 컴포넌트
 import AppHeader from '../components/AppHeader'
 
@@ -34,6 +36,14 @@ export default new Router({
       name: 'Signup',
       component: Signup
     },
+    {
+      path:'/main',
+      name:'MainPage',
+      components:{
+        header: SidebarMenu,
+        default: MainPage
+      }
+    }
 
   ]
 })
