@@ -55,6 +55,10 @@ app.use(errorHandler);
 var passport= require('passport');
 var flash = require('connect-flash');
 
+app.use(passport.initialize()); // passport 초기화
+app.use(passport.session());  // 세션 유지
+app.use(flash());
+
 // express 서버 시작
 http.createServer(app).listen(app.get('port'),function(){
     console.log('server on! port:' + app.get('port'));
