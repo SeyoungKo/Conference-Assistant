@@ -23,9 +23,10 @@ export default {
    height: 620px;
    margin: -165px 0 0 -228px;
    padding: 45px 60px 60px;
+   box-shadow: 4px 4px 2px rgb(233, 233, 233);
    background-color: #fff;
-   border: 1px solid #ededed;
-   border-radius: 2rem;
+   border: 1px solid #eeeeee;
+   border-radius: 1.2rem;
 }
 h4{
     display: inline;

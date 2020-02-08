@@ -1,5 +1,9 @@
 <template>
     <div class="chatroom-input-form">
+        <div class="file_input_div">
+    <img src="../img/fileupload.png" class="file_input_img_btn" alt="open" />
+    <input type="file" name="file_1" class="file_input_hidden" onchange="javascript: document.getElementById('fileName').value = this.value"/>
+</div>
         <input type="text" placeholder="   채팅을 입력하세요."/>
         <button type="submit">전송</button>
     </div>
@@ -42,4 +46,27 @@ button[type="submit"]{
     border-radius: 0.5rem;
     background:#32a852;
 }
+.file_input_div {
+    position:fixed;
+    margin-top: -10%;
+}
+.file_input_img_btn {
+    overflow: hidden;
+    width:22px;
+    height:28px;
+    margin-left: -170%;
+    margin-top: 385%;
+    padding:0 0 0 5px;
+}
+.file_input_hidden {
+    position: absolute;
+    margin-left: 100%;
+    right:-150px;
+    top:110px;
+    opacity:0;
+    filter: alpha(opacity=0);
+    -ms-filter: alpha(opacity=0);
+    cursor:pointer;
+}
+
 </style>

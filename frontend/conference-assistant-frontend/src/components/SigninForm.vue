@@ -21,7 +21,7 @@
 import FindpasswordModal from '../components/FindpasswordModal'
 
 export default {
-    name: 'SigninForm',
+name: 'SigninForm',
     components:{
         FindpasswordModal
     },
