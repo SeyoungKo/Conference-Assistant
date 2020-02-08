@@ -51,6 +51,10 @@ app.use(errorHandler);
 
 // ==== server on ====
 
+// passport 사용
+var passport= require('passport');
+var flash = require('connect-flash');
+
 // express 서버 시작
 http.createServer(app).listen(app.get('port'),function(){
     console.log('server on! port:' + app.get('port'));
