@@ -15,7 +15,16 @@ var expressErrorHandler = require('express-error-handler');
 // Session 미들웨어
 var expressSession = require('express-session');
 
+// passport 모듈
+var passport = require('passport');
+var flash = require('connect-flash');
+
+// config 설정 파일 불러오기
+var config = require('./config');
 var app = express();
+
+// 데이터베이스 파일 불러오기
+var database = require('./database/database');
 
 // 서버 변수 설정 및 public 폴더 설정
 app.set('port', process.env.PORT || 3000);
@@ -48,6 +57,80 @@ var errorHandler = expressErrorHandler({
 
 app.use(expressErrorHandler.httpError(404));
 app.use(errorHandler);
+
+// ==== Passport Strategy 설정 ====
+
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use('local-login', new LocalStrategy({
+    // 요청 파라미터
+    usernameField : 'id',
+    passwordField : 'password',
+    passReqToCallback : true
+}), function(req, id, password, done){
+    console.log('passport local-login : ' + id +', ' + password);
+
+    var database = app.get('database');
+    database.UserModel.findOne({'id' : id}, function (err, user){
+        // 오류 발생
+        if(err){
+            return done(err);
+        }
+        // id, password가 일치하지 않음
+        if(!user){
+            return done(null, false, req.flash('loginMessage', '등록된 계정이 없습니다.'));
+        }
+        // 정상 처리
+        return done(null,user);
+    });
+});
+
+passport.use('local-signup', new LocalStrategy({
+    usernameField : 'id',
+    passwordField : 'password',
+    passReqToCallback : true
+}, function(req, id, password, done){
+    // 요청 파라미터 유효성 확인
+    var paramName = req.body.name || req.query.name;
+    var paramTel = req.body.tel || req.query.tel;
+    var paramEmail = req.body.email || req.query.email;
+
+    process.nextTick(function(){
+        var database = app.get('database');
+        database.UserModel.findOne({'id' : id}, function(err, user){
+            // 오류 발생
+            if(err){
+                return done(err);
+            }
+            // 이미 가입된 사용자 정보가 있는 경우
+            if(user){
+                return done(null, false, req.flash('signupMessage', '이미 가입된 계정입니다.'));
+            }else {
+                var user = new database.UserModel({'id' : id, 'password' : password, 'name' : paramName, 'tel' : paramTel, 'email' : paramEmail});
+                user.save(function(err){
+                    if(err){
+                        throw err;
+                    }
+                    console.log('user 데이터 추가됨');
+                    return done(null, user);
+                });
+            }
+        });
+    });
+}));
+
+
+// done(null,user) 콜백에서 넘겨주는 user 객체 정보를 이용해 세션 생성
+passport.serializeUser(function(user, done){
+    console.dir(user);
+    done(null,user);
+});
+
+passport.deserializeUser(function(user, done){
+    console.dir(user);
+    done(null, user); // user : serializeUser에서 만들어진 세션 정보
+});
+
 
 // ==== server on ====
 
