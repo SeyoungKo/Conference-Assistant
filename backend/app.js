@@ -9,6 +9,9 @@ var bodyParser = require('body-parser')
    ,static = require('serve-static')
    ,errorHandler = require('errorhandler');
 
+var socketio = require('socket.io');
+var cors = require('cors');
+
 // 에러 핸들러 모듈
 var expressErrorHandler = require('express-error-handler');
 
@@ -47,6 +50,9 @@ app.use(expressSession({
     resave:true,
     saveUninitialized:true
 }));
+
+// cors를 미들웨어로 사용하도록 등록
+app.use(cors());
 
 // 404 에러페이지 처리
 var errorHandler = expressErrorHandler({
@@ -146,3 +152,15 @@ app.use(flash());
 http.createServer(app).listen(app.get('port'),function(){
     console.log('server on! port:' + app.get('port'));
 });
+
+// socket.io 서버 시작
+var io = socket.io.listen(app);
+console.log('socket io server on !');
+
+io.sockets.on('connection', function(socket){
+    console.log('connection info :' , socket.request.connection._peername);
+
+    // socket 객체에 클라이언트 host, port 정보를 속성으로 추가
+    socket.remoteAddress = socket.request.connection._peername.address;
+    socket.remotePort = socket.request.connection._peername.port;
+})
