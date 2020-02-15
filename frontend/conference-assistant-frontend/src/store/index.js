@@ -10,9 +10,16 @@ import mutations from './mutations.js'
 
 Vue.use(Vuex)
 
+const debug = process.env.NODE_ENV !== 'production';
+
 export default new Vuex.Store({
     state,
     getters,
     mutations,
-    actions
-})
+    actions,
+
+    modules: {
+        socket,
+    },
+    strict : debug,
+});

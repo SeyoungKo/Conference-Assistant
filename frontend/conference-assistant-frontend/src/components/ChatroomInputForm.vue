@@ -1,17 +1,25 @@
 <template>
     <div class="chatroom-input-form">
         <div class="file_input_div">
-    <img src="../img/fileupload.png" class="file_input_img_btn" alt="open" />
-    <input type="file" name="file_1" class="file_input_hidden" onchange="javascript: document.getElementById('fileName').value = this.value"/>
-</div>
-        <input type="text" placeholder="   채팅을 입력하세요."/>
-        <button type="submit">전송</button>
+            <img src="../img/fileupload.png" class="file_input_img_btn" alt="open" />
+            <input type="file" name="file_1" class="file_input_hidden" onchange="javascript: document.getElementById('fileName').value = this.value"/>
+        </div>
+        <textarea v-model="message" rows="5" placeholder="   채팅을 입력하세요."/>
+        <button type="button" @click="onSubmit">전송</button>
+        <!-- <input type="text" id="hostInput" value="localhost"/>
+        <input type="text" id="portInput" value="3000"/> -->
     </div>
-
 </template>
+
 <script>
 export default {
-    name : 'ChatroomInputForm'
+    name : 'ChatroomInputForm',
+
+    onSubmit(){
+        const{message}= this
+        this.$emit('submit', message)
+        this.message=''
+    }
 }
 </script>
 <style scoped>

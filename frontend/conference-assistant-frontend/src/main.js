@@ -5,8 +5,15 @@ import App from './App'
 import router from './router'
 import VModal from 'vue-js-modal'
 
+import Directives from './plugins/directives';
+import io from 'socket.io-client';
+const socket = io('http://localhost:8080'); // socket server
+
 Vue.use(VModal, {dynamic: true})
 Vue.config.productionTip = false
+Vue.prototype.$socket =socket;
+
+Vue.use(Directives)
 
 /* eslint-disable no-new */
 new Vue({
