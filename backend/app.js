@@ -9,7 +9,9 @@ var bodyParser = require('body-parser')
    ,static = require('serve-static')
    ,errorHandler = require('errorhandler');
 
-var socketio = require('socket.io');
+var server = require('http').createServer(app);
+
+var io = require('socket.io')(server);
 var cors = require('cors');
 
 // 에러 핸들러 모듈
@@ -30,7 +32,7 @@ var app = express();
 var database = require('./database/database');
 
 // 서버 변수 설정 및 public 폴더 설정
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 
 // body-parser로 application/x-www-form-urlencoded 파싱
 app.use(bodyParser.urlencoded({extended:false}))
@@ -54,6 +56,7 @@ app.use(expressSession({
 // cors를 미들웨어로 사용하도록 등록
 app.use(cors());
 
+
 // 404 에러페이지 처리
 var errorHandler = expressErrorHandler({
     static:{
@@ -66,76 +69,75 @@ app.use(errorHandler);
 
 // ==== Passport Strategy 설정 ====
 
-var LocalStrategy = require('passport-local').Strategy;
+// var LocalStrategy = require('passport-local').Strategy;
 
-passport.use('local-login', new LocalStrategy({
-    // 요청 파라미터
-    usernameField : 'id',
-    passwordField : 'password',
-    passReqToCallback : true
-}), function(req, id, password, done){
-    console.log('passport local-login : ' + id +', ' + password);
+// passport.use('local-login', new LocalStrategy({
+//     // 요청 파라미터
+//     usernameField : 'id',
+//     passwordField : 'password',
+//     passReqToCallback : true
+// }), function(req, id, password, done){
+//     console.log('passport local-login : ' + id +', ' + password);
 
-    var database = app.get('database');
-    database.UserModel.findOne({'id' : id}, function (err, user){
-        // 오류 발생
-        if(err){
-            return done(err);
-        }
-        // id, password가 일치하지 않음
-        if(!user){
-            return done(null, false, req.flash('loginMessage', '등록된 계정이 없습니다.'));
-        }
-        // 정상 처리
-        return done(null,user);
-    });
-});
+//     var database = app.get('database');
+//     database.UserModel.findOne({'id' : id}, function (err, user){
+//         // 오류 발생
+//         if(err){
+//             return done(err);
+//         }
+//         // id, password가 일치하지 않음
+//         if(!user){
+//             return done(null, false, req.flash('loginMessage', '등록된 계정이 없습니다.'));
+//         }
+//         // 정상 처리
+//         return done(null,user);
+//     });
+// });
 
-passport.use('local-signup', new LocalStrategy({
-    usernameField : 'id',
-    passwordField : 'password',
-    passReqToCallback : true
-}, function(req, id, password, done){
-    // 요청 파라미터 유효성 확인
-    var paramName = req.body.name || req.query.name;
-    var paramTel = req.body.tel || req.query.tel;
-    var paramEmail = req.body.email || req.query.email;
+// passport.use('local-signup', new LocalStrategy({
+//     usernameField : 'id',
+//     passwordField : 'password',
+//     passReqToCallback : true
+// }, function(req, id, password, done){
+//     // 요청 파라미터 유효성 확인
+//     var paramName = req.body.name || req.query.name;
+//     var paramTel = req.body.tel || req.query.tel;
+//     var paramEmail = req.body.email || req.query.email;
 
-    process.nextTick(function(){
-        var database = app.get('database');
-        database.UserModel.findOne({'id' : id}, function(err, user){
-            // 오류 발생
-            if(err){
-                return done(err);
-            }
-            // 이미 가입된 사용자 정보가 있는 경우
-            if(user){
-                return done(null, false, req.flash('signupMessage', '이미 가입된 계정입니다.'));
-            }else {
-                var user = new database.UserModel({'id' : id, 'password' : password, 'name' : paramName, 'tel' : paramTel, 'email' : paramEmail});
-                user.save(function(err){
-                    if(err){
-                        throw err;
-                    }
-                    console.log('user 데이터 추가됨');
-                    return done(null, user);
-                });
-            }
-        });
-    });
-}));
+//     process.nextTick(function(){
+//         var database = app.get('database');
+//         database.UserModel.findOne({'id' : id}, function(err, user){
+//             // 오류 발생
+//             if(err){
+//                 return done(err);
+//             }
+//             // 이미 가입된 사용자 정보가 있는 경우
+//             if(user){
+//                 return done(null, false, req.flash('signupMessage', '이미 가입된 계정입니다.'));
+//             }else {
+//                 var user = new database.UserModel({'id' : id, 'password' : password, 'name' : paramName, 'tel' : paramTel, 'email' : paramEmail});
+//                 user.save(function(err){
+//                     if(err){
+//                         throw err;
+//                     }
+//                     console.log('user 데이터 추가됨');
+//                     return done(null, user);
+//                 });
+//             }
+//         });
+//     });
+// }));
 
+// // done(null,user) 콜백에서 넘겨주는 user 객체 정보를 이용해 세션 생성
+// passport.serializeUser(function(user, done){
+//     console.dir(user);
+//     done(null,user);
+// });
 
-// done(null,user) 콜백에서 넘겨주는 user 객체 정보를 이용해 세션 생성
-passport.serializeUser(function(user, done){
-    console.dir(user);
-    done(null,user);
-});
-
-passport.deserializeUser(function(user, done){
-    console.dir(user);
-    done(null, user); // user : serializeUser에서 만들어진 세션 정보
-});
+// passport.deserializeUser(function(user, done){
+//     console.dir(user);
+//     done(null, user); // user : serializeUser에서 만들어진 세션 정보
+// });
 
 
 // ==== server on ====
@@ -148,19 +150,31 @@ app.use(passport.initialize()); // passport 초기화
 app.use(passport.session());  // 세션 유지
 app.use(flash());
 
-// express 서버 시작
-http.createServer(app).listen(app.get('port'),function(){
-    console.log('server on! port:' + app.get('port'));
+var app = require('express')();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+//setting cors
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next(); });
+
+
+app.get('/', function(req, res) {
+    res.sendFile('Server on');
 });
 
-// socket.io 서버 시작
-var io = socket.io.listen(app);
-console.log('socket io server on !');
+//connection event handler
+io.on('connection' , function(socket) {
+    console.log('Connect from Client: '+socket)
+    socket.on('chat', function(data){
+        console.log('message from Client: '+data.message)
+        var rtnMessage = { message: data.message };
 
-io.sockets.on('connection', function(socket){
-    console.log('connection info :' , socket.request.connection._peername);
-
-    // socket 객체에 클라이언트 host, port 정보를 속성으로 추가
-    socket.remoteAddress = socket.request.connection._peername.address;
-    socket.remotePort = socket.request.connection._peername.port;
+// send message to client
+socket.broadcast.emit('chat', rtnMessage); });
+})
+    server.listen(8080, function() {
+    console.log('socket io server listening on port 8080')
 })
