@@ -8,6 +8,7 @@
             <p><router-link :to="{name:'Signin'}">회의록</router-link></p>
             <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 회의록 목록</router-link></p>
             <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 승인 대기중</router-link></p>
+            <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 승인 완료</router-link></p>
         </div>
         <hr>
         <div class="online-userlist">
@@ -39,7 +40,7 @@ img{
     margin-top: 8%;
     margin-left: 3%;
     width:30%;
-    height:9.5%;
+    height:9%;
 }
 a{
     margin-top: 10%;

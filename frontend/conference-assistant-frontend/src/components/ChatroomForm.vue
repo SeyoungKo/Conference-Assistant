@@ -50,7 +50,7 @@ export default {
    left: 33%;
    top: 35%;
    width: 540px;
-   height: 620px;
+   height: 650px;
    margin: -165px 0 0 -228px;
    padding: 45px 60px 60px;
    box-shadow: 4px 4px 2px rgb(233, 233, 233);
@@ -59,6 +59,7 @@ export default {
    border-radius: 1.2rem;
 }
 h4{
+    margin: 0 auto;
     display: inline;
 }
 button img{
@@ -67,8 +68,9 @@ button img{
     width:37px;
 }
 .textarea{
-  height:300px;
-  width:80%
+  height:460px;
+  margin-bottom: -130px;
+  width:158%
 }
 .page-container{
   height: 800px;
