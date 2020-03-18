@@ -49,8 +49,8 @@ export default {
    position: fixed;
    left: 33%;
    top: 35%;
-   width: 540px;
-   height: 650px;
+   width: 580px;
+   height: 610px;
    margin: -165px 0 0 -228px;
    padding: 45px 60px 60px;
    box-shadow: 4px 4px 2px rgb(233, 233, 233);
@@ -63,17 +63,17 @@ h4{
     display: inline;
 }
 button img{
-    margin-left: 880%;
+    margin-left: 995%;
     height:30px;
     width:37px;
 }
 .textarea{
-  height:460px;
+  height:420px;
   margin-bottom: -130px;
-  width:158%
+  width:163%
 }
 .page-container{
-  height: 800px;
+  height: 700px;
   width: 300px;
   border: 1px solid rgba(#000, .12);
 }
@@ -81,7 +81,7 @@ button img{
    position:fixed;
    left:32%;
    top:105%;
-   width: 518px;
+   width: 600px;
    height:10%;
    margin: -165px 0 0 -205px;
    padding: 45px 60px 60px;
@@ -95,22 +95,21 @@ input[type="text"]{
     margin-top: 10px;
     margin-bottom: 15px;
     margin-left:3%;
-    padding-right: 50%;
+    padding-right: 54.5%;
 
 }
 .chat_input_div{
     margin-left: -5px;
-    width:155%;
-    height:54px;
-    border : 1.5px solid rgba(202, 202, 202, 0.932);
+    width:165%;
+    height:56px;
+    border : 1px solid rgba(184, 184, 184, 0.932);
     border-radius: 1rem;
 }
 .chat_input_div button{
     /* margin-left: 50%; */
-    margin-top: 2px;
-    height: 94%;
-    width: 50px;
-    border-radius: 0.5rem;
+    height: 100%;
+    width: 58px;
+    border-radius: 0.4rem;
     background-color: #32a852;
     font-weight: 600;
     color:white;
@@ -126,9 +125,9 @@ input[type="text"]{
 .file_input_img_btn {
     overflow: hidden;
     width:22px;
-    height:28px;
+    height:25px;
     margin-left: -170%;
-    margin-top: 385%;
+    margin-top: 353%;
     padding:0 0 0 5px;
 }
 .file_input_hidden {

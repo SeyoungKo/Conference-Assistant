@@ -11,9 +11,9 @@ export default {
 <style scoped>
 .selected-chat-form{
    position: fixed;
-   left: 72%;
+   left: 75%;
    top: 35%;
-   width: 600px;
+   width: 570px;
    height: 220px;
    margin: -165px 0 0 -228px;
    padding: 45px 60px 60px;
