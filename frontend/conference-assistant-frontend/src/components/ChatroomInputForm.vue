@@ -1,13 +1,13 @@
 <template>
     <div class="chatroom-input-form">
+     <!-- <div class="input_div">
         <div class="file_input_div">
             <img src="../img/fileupload.png" class="file_input_img_btn" alt="open" />
             <input type="file" name="file_1" class="file_input_hidden" onchange="javascript: document.getElementById('fileName').value = this.value"/>
         </div>
-        <textarea v-model="message" rows="5" placeholder="   채팅을 입력하세요."/>
-        <button type="button" @click="onSubmit">전송</button>
-        <!-- <input type="text" id="hostInput" value="localhost"/>
-        <input type="text" id="portInput" value="3000"/> -->
+            <textarea v-model="message" rows="5" placeholder="   채팅을 입력하세요."/>
+            <button type="button" @click="onSubmit">전송</button>
+        </div> -->
     </div>
 </template>
 
@@ -35,14 +35,14 @@ export default {
    border: 1px solid #ededed;
    border-radius: 0.8rem;
 }
-input[type="text"]{
+/* input[type="text"]{
     position:fixed;
     margin-left: -3%;
     margin-top: -11px;
     height:58px;
     width: 440px;
     border-radius: 0.3rem;
-}
+} */
 button[type="submit"]{
     position:fixed;
     margin-top: -11px;
@@ -75,6 +75,10 @@ button[type="submit"]{
     filter: alpha(opacity=0);
     -ms-filter: alpha(opacity=0);
     cursor:pointer;
+}
+
+.input_div{
+    margin-top: 80%;
 }
 
 </style>
