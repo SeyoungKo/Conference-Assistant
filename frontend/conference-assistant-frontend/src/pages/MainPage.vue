@@ -1,9 +1,9 @@
 <template>
     <div class="main-page">
         <SidebarMenu/>
-        <p>main page</p>
         <ChatroomForm/>
         <SelectedChatForm/>
+        <AIMediationForm/>
         <AIKeywordListForm/>
     </div>
 </template>
@@ -12,6 +12,7 @@ import SidebarMenu from '../components/SidebarMenu'
 import ChatroomForm from '../components/ChatroomForm'
 import SelectedChatForm from '../components/SelectedChatForm'
 import AIKeywordListForm from '../components/AIKeywordListForm'
+import AIMediationForm from '../components/AIMediationForm'
 
 export default {
     name:'MainPage',
@@ -19,7 +20,8 @@ export default {
         SidebarMenu,
         ChatroomForm,
         SelectedChatForm,
-        AIKeywordListForm
+        AIKeywordListForm,
+        AIMediationForm
     }
 }
 </script>

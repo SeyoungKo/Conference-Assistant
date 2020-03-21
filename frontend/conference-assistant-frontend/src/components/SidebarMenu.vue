@@ -13,7 +13,8 @@
         <hr>
         <div class="online-userlist">
             <h5>이 팀에 소속된 팀원</h5>
-            <img src="../img/offline.png"><button type="button" class="btn">user1</button><br>
+            <img src="../img/offline.png"><button type="button" class="btn"  @mouseover="isActive= true" @mouseleave="isActive= false">{{name}}</button><br>
+                <ShowProfileForm v-bind:propsname="name" v-show="isActive"></ShowProfileForm>
             <img src="../img/offline.png"><button type="button" class="btn">user2</button>
         </div>
         <div class="chat-list">
@@ -23,13 +24,24 @@
 </div>
 </template>
 <script>
+import ShowProfileForm from './ShowProfileForm'
 export default {
-    name: 'SidebarMenu'
+    name: 'SidebarMenu',
+    components:{
+      ShowProfileForm
+    },
+    data(){
+        return {
+            isActive:false,
+            name : 'user1'    // sample user
+        }
+    }
 }
 </script>
 <style scoped>
 .sidebar-menu{
     position:fixed;
+    z-index: 1;
     top:0;
     left:0;
     height: 100%;

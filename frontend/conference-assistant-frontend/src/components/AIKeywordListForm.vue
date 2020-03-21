@@ -26,8 +26,8 @@ export default {
 h4{
     margin-top:-20%;
     margin-left: -30%;
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 20px;
+    font-weight: 700;
 }
 p{
     padding-top: 70%;

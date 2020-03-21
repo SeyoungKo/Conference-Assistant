@@ -1,6 +1,6 @@
 <template>
     <div class="chatroom-form">
-        <h4><span>채팅방 제목</span></h4><button type="button"><img src="../img/menu.png"></button>
+        <h4 class="chat-title"><span>채팅방 제목</span></h4><button type="button"><img src="../img/menu.png"></button>
          <div class="page-container">
           <textarea class="textarea" v-model="textarea" disabled v-auto-scroll-bottom></textarea>
         <div class="input_div">
@@ -17,7 +17,6 @@
     </div>
 </template>
 <script>
-import ChatroomInputForm from '../components/ChatroomInputForm'
 export default {
     name: 'ChatroomForm',
 
@@ -44,31 +43,35 @@ export default {
 }
 </script>
 <style scoped>
+
 .chatroom-form{
-   /* height:530vh; */
+   z-index:0;
    position: fixed;
-   left: 33%;
-   top: 35%;
+   margin-top:1.8%;
    width: 580px;
    height: 610px;
-   margin: -165px 0 0 -228px;
-   padding: 45px 60px 60px;
+   margin-left: 17%;
    box-shadow: 4px 4px 2px rgb(233, 233, 233);
    background-color: #fff;
    border: 1px solid #eeeeee;
    border-radius: 1.2rem;
 }
-h4{
-    margin: 0 auto;
+.chat-title{
     display: inline;
+    margin-left: 20px;
+    font-size: 18px;
+    display:inline-block;
 }
 button img{
-    margin-left: 995%;
+    margin-left: 999%;
+    margin-top:20px;
+    padding-left: 10%;
     height:30px;
     width:37px;
 }
 .textarea{
   height:420px;
+  margin-left: 10%;
   margin-bottom: -130px;
   width:163%
 }
@@ -79,7 +82,7 @@ button img{
 }
 .chatroom-input-form{
    position:fixed;
-   left:32%;
+   left:40%;
    top:105%;
    width: 600px;
    height:10%;
@@ -99,7 +102,7 @@ input[type="text"]{
 
 }
 .chat_input_div{
-    margin-left: -5px;
+    margin-left: 48px;
     width:165%;
     height:56px;
     border : 1px solid rgba(184, 184, 184, 0.932);
@@ -109,6 +112,7 @@ input[type="text"]{
     /* margin-left: 50%; */
     height: 100%;
     width: 58px;
+    margin-left: 0.5px;
     border-radius: 0.4rem;
     background-color: #32a852;
     font-weight: 600;
@@ -126,14 +130,15 @@ input[type="text"]{
     overflow: hidden;
     width:22px;
     height:25px;
-    margin-left: -170%;
+    margin-left: 30%;
     margin-top: 353%;
     padding:0 0 0 5px;
 }
 .file_input_hidden {
     position: absolute;
-    margin-left: 100%;
-    right:20px;
+    margin-left: 50%;
+    margin-top:-10px;
+    right:-15px;
     top:110px;
     width:50px;
     opacity:0;

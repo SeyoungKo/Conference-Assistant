@@ -42,7 +42,8 @@ export default new Router({
       components:{
         header: SidebarMenu,
         default: MainPage
-      }
+      },
+      props : true
     }
 
   ]
