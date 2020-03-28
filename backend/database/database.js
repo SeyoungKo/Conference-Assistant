@@ -5,6 +5,7 @@ var database={};
 // 데이터베이스 초기화
 database.init = function(app,config){
     console.log('database init');
+
     connect(app,config);
 }
 
@@ -21,6 +22,7 @@ function connect(app,config){
 
         // config에 등록된 스키마, 모델 객체 생성
         createSchema(app,config);
+
     });
     database.db.on('disconnected',connect);
 }

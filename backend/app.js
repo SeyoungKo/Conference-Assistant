@@ -10,7 +10,6 @@ var bodyParser = require('body-parser')
    ,errorHandler = require('errorhandler');
 
 var server = require('http').createServer(app);
-
 var io = require('socket.io')(server);
 var cors = require('cors');
 
@@ -26,10 +25,19 @@ var flash = require('connect-flash');
 
 // config 설정 파일 불러오기
 var config = require('./config');
-var app = express();
 
 // 데이터베이스 파일 불러오기
 var database = require('./database/database');
+
+// 데이터베이스 연결 정보
+var config = require('./config');
+
+var chat = require('./routes/chat');
+
+var ChatSchema = require('./database/database');
+var ChatModel ;
+
+var app = express();
 
 // 서버 변수 설정 및 public 폴더 설정
 app.set('port', process.env.PORT || 8080);
@@ -150,10 +158,6 @@ app.use(passport.initialize()); // passport 초기화
 app.use(passport.session());  // 세션 유지
 app.use(flash());
 
-var app = require('express')();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-
 //setting cors
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -165,16 +169,50 @@ app.get('/', function(req, res) {
     res.sendFile('Server on');
 });
 
+
 //connection event handler
 io.on('connection' , function(socket) {
-    console.log('Connect from Client: '+socket)
-    socket.on('chat', function(data){
-        console.log('message from Client: '+data.message)
-        var rtnMessage = { message: data.message };
+        console.log('Connect from Client: '+socket)
 
-// send message to client
-socket.broadcast.emit('chat', rtnMessage); });
-})
-    server.listen(8080, function() {
+        socket.on('chat', function(data){
+        console.log('message from Client: '+data.message)
+        var rtnMessage = data.message;
+
+        //  message: data.message
+
+        // send message to client
+        socket.broadcast.emit('chat', rtnMessage);
+            if(database){
+                chat.addChat(database,'test sender', rtnMessage, function(err,result){
+                    if(err){
+                        throw err;
+                    }
+                    // 결과 객체 확인
+                    if(result && result.insertedCount >0){
+                        console.dir(result);
+                    }
+                });
+            }else{
+                // 데이터베이스 객체가 초기화되지 않은 경우
+                console.log("database is not initialized");
+            }
+        });
+    })
+
+    process.on('SIGTERM', function(){
+        app.close();
+    });
+
+    app.on('close', function(){
+        if(database.db){
+            database.db.close();
+        }
+    });
+
+    http.createServer(app).listen(app.get('port'),function() {
+
+    // 데이터베이스 connect() 호출
+    database.init(app, config);
     console.log('socket io server listening on port 8080')
-})
+
+});
