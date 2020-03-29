@@ -176,14 +176,18 @@ io.on('connection' , function(socket) {
 
         socket.on('chat', function(data){
         console.log('message from Client: '+data.message)
-        var rtnMessage = data.message;
 
+        var rtnMessage = { message: data.message };
+        // var rtnMessage = { message: data.message };
         //  message: data.message
+
+        // 데이터베이스 저장 메세지
+        var msg = data.message;
 
         // send message to client
         socket.broadcast.emit('chat', rtnMessage);
             if(database){
-                chat.addChat(database,'test sender', rtnMessage, function(err,result){
+                chat.addChat(database,'test sender', msg, function(err,result){
                     if(err){
                         throw err;
                     }
@@ -209,7 +213,7 @@ io.on('connection' , function(socket) {
         }
     });
 
-    http.createServer(app).listen(app.get('port'),function() {
+    server.listen(8080,function() {
 
     // 데이터베이스 connect() 호출
     database.init(app, config);

@@ -5,6 +5,6 @@ module.exports={
         {file:'./chat_schema', collection:'chats', schemaName:'ChatSchema', modelName:'ChatModel'}
     ],
     route_info:[
-
+        // {file:'./chat', path:'/process/addchat', method:'addChat', type:'post'}
     ]
 }

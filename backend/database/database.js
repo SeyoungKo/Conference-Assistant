@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var database={};
+require('./chat_schema');
 
 // 데이터베이스 초기화
 database.init = function(app,config){
