@@ -178,8 +178,6 @@ io.on('connection' , function(socket) {
         console.log('message from Client: '+data.message)
 
         var rtnMessage = { message: data.message };
-        // var rtnMessage = { message: data.message };
-        //  message: data.message
 
         // 데이터베이스 저장 메세지
         var msg = data.message;

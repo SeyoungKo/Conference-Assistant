@@ -1,4 +1,6 @@
 from pymongo import MongoClient
+import json
+import pandas as pd
 import datetime
 
 client = MongoClient()
@@ -11,25 +13,34 @@ client = MongoClient('mongodb://localhost:27017/local')
 # DB_PW = 'PW'
 # client = MongoClient('mongodb://%s:%s@%s' % (DB_ID, DB_PW, DB_HOST))
 
-db = client["mongo_tutorial"]
+db = client["local"]
 # db 객체 할당받기
 
-users = db["users"]
+chats = db["chats"]
 # db에서 collection 이름으로 객체를 생성
 
-post={
-    "id" : "mike",
-    "age" : 20,
-    "text" : "테스트 도큐먼트입니다1."
-}
+# post={
+#     "id" : "mike",
+#     "age" : 20,
+#     "text" : "테스트 도큐먼트입니다1."
+# }
 
-coll = db.users
+coll = db.chats
 # users 변수에 해당하는 collection 이름으로 할당된다.
-coll.insert(post)
+
+# coll.insert(post)
 
 coll_list = db.collection_names()
 # collection 목록 보기
 
-for post in coll.find():print(post)
+for chats in coll.find():print(chats.get('contents'))
 # users에 저장된 도큐먼트 모두 불러오기
+
+# res = json.dumps(chats, default=str)
+# json 직렬화 (serialize)
+
+
+# chats collection에서 불러온 json타입 데이터에서 contents 문자열 가져오기
+
+
 
