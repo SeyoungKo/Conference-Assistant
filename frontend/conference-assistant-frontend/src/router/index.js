@@ -5,6 +5,8 @@ import Signup from '../pages/Signup'
 import TeamListPage from '../pages/TeamListPage'
 import MainPage from '../pages/MainPage'
 import SidebarMenu from '../components/SidebarMenu'
+import TimelinePage from '../pages/TimelinePage'
+
 //헤더 컴포넌트
 import AppHeader from '../components/AppHeader'
 
@@ -42,6 +44,15 @@ export default new Router({
       components:{
         header: SidebarMenu,
         default: MainPage
+      },
+      props : true
+    },
+    {
+      path:'/timeline',
+      name:'TimelinePage',
+      components:{
+        header : SidebarMenu,
+        default : TimelinePage
       },
       props : true
     }

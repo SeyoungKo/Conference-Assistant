@@ -4,7 +4,7 @@
         <p>http://Team1.dure.com</p>
         <div class="route-menu">
             <router-link :to="{name:'Signin'}">업무자료</router-link><p></p>
-            <p><router-link :to="{name:'Signin'}">타임라인</router-link></p>
+            <p><router-link :to="{name:'TimelinePage'}">타임라인</router-link></p>
             <p><router-link :to="{name:'Signin'}">회의록</router-link></p>
             <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 회의록 목록</router-link></p>
             <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 승인 대기중</router-link></p>
