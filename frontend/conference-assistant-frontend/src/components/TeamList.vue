@@ -1,12 +1,13 @@
 <template>
     <div class="team-list">
-        <router-link :to="{name: 'Signup'}">프로필 변경</router-link>
-        <div class="team-item">
+        <router-link class="router-profile ":to="{name: 'Signup'}">프로필 변경</router-link>
+        <router-link clsss="router-main" :to="{name: 'MainPage'}"><div class="team-item">
         <img class="close" src="../img/close.png">
         <img src="../img/dure_team_profile.png">
         <p class="team-name">Team1</p><br>
-        <p style="margin-left:100px;">http://Team1.dure.com</p>
+        <p style="margin-left:100px; font-size:14px;">http://Team1.dure.com</p>
         </div>
+        </router-link>
         <button type="button" @click="showModal">팀 추가하기</button>
         <AddTeamModal v-show="isModalVisible" @close="closeModal" @create="showSecondModal"/>
         <CreateTeamModal v-if="isStatusOn"  @close="closeSecondModal"/>
@@ -50,7 +51,7 @@ export default {
 }
 </script>
 <style scoped>
-.team-list a{
+.team-list .router-profile{
   float:left;
   height: 10%;
    width: 12%;
@@ -66,6 +67,10 @@ export default {
    background-color: #32a852;
    text-decoration: none;
    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+a{
+    text-decoration:none;
+    color:rgb(68, 68, 68);
 }
 .team-list button[type="button"]{
     margin-left: 6%;
@@ -104,7 +109,7 @@ export default {
 
 .team-item img{
     position: relative;
-    left:2px;
+    margin-right:200px;
     top: -365px;
     height:83px;
     width: 93px;
@@ -112,11 +117,11 @@ export default {
 .team-item p{
     position:relative;
     left : 10px;
-    top : -420px;
+    top : -410px;
     display: inline;
 }
 .team-item .team-name{
-    left : 20px;
+    left : -180px;
     font-size : 23px;
     font-weight: 700;
 }
