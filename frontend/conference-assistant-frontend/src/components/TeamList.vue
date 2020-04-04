@@ -1,22 +1,47 @@
 <template>
     <div class="team-list">
         <router-link :to="{name: 'Signup'}">프로필 변경</router-link>
-        <button type="button">팀 추가하기</button>
+        <div class="team-item">
+        <img class="close" src="../img/close.png">
+        <img src="../img/dure_team_profile.png">
+        <p class="team-name">Team1</p><br>
+        <p style="margin-left:100px;">http://Team1.dure.com</p>
+        </div>
+        <button type="button" @click="showModal">팀 추가하기</button>
+        <CreateTeamModal v-show="isModalVisible" @close="closeModal"/>
     </div>
 </template>
 <script>
+import CreateTeamModal from '../components/CreateTeamModal'
+
 export default {
-    name : 'TeamList'
+    name : 'TeamList',
+    components:{
+        CreateTeamModal
+    },
+    data(){
+        return{
+            isModalVisible: false
+        };
+    },
+    methods:{
+        showModal(){
+            this.isModalVisible = true;
+        },
+        closeModal(){
+            this.isModalVisible = false;
+        }
+    }
 }
 </script>
 <style scoped>
 .team-list a{
   float:left;
   height: 10%;
-   width: 13%;
+   width: 12%;
    margin-top: -5%;
    margin-left: 80%;
-   margin-bottom: 20%;
+   margin-bottom: 25%;
    padding: 1rem;
    font-size: 19px;
    font-weight: bold;
@@ -28,18 +53,61 @@ export default {
    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .team-list button[type="button"]{
-    margin-left: 4%;
+    margin-left: 6%;
     margin-top: -20%;
     height: 10%;
-    width: 90%;
+    width: 85%;
     padding: 2rem;
     font-size: 19px;
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
-    color: #fff;
+    color: #ffff;
     border-radius: 1rem;
     background-color: #cacaca;
 
+}
+
+.team-list button[type="button"]:hover{
+    background-color:rgb(141, 141, 141);
+    color:#fff;
+}
+.team-item{
+    margin-left: 90px;
+    margin-top: 7px;
+    width: 85%;
+    border : 1.5px solid rgb(223, 223, 223);
+    background: #ffffff;
+    border-radius: 0.4rem;
+    height: 90px;
+}
+.team-item .close{
+    margin-bottom: -37px;
+    margin-left: 97%;
+    height: 20px;
+    width: 20px;
+}
+
+.team-item img{
+    position: relative;
+    left:2px;
+    top: -365px;
+    height:83px;
+    width: 93px;
+}
+.team-item p{
+    position:relative;
+    left : 10px;
+    top : -420px;
+    display: inline;
+}
+.team-item .team-name{
+    left : 20px;
+    font-size : 23px;
+    font-weight: 700;
+}
+.team-item :nth-child(4){
+    font-size: 15px;
+    color:rgb(104, 104, 104);
 }
 
 </style>

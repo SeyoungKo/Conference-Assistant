@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar-menu">
-        <img src="../img/dure_default.png"><span>&nbsp;&nbsp;Team1</span>
+        <img src="../img/dure_default.png"><router-link :to="{name:'MainPage'}" style="position:absolute;font-size:23px;font-weight:900">&nbsp;&nbsp;Team1</router-link>
         <p>http://Team1.dure.com</p>
         <div class="route-menu">
             <router-link :to="{name:'Signin'}">업무자료</router-link><p></p>
