@@ -1,6 +1,9 @@
 <template>
     <div class="sidebar-menu">
         <img src="../img/dure_default.png"><router-link :to="{name:'MainPage'}" style="position:absolute;font-size:23px;font-weight:900">&nbsp;&nbsp;Team1</router-link>
+        <span><img class="drop-menu-icon" src="../img/drop_menu.png" v-on:click="showDropMenu">
+        <div v-if="isStatusOn" class="drop-menu">Team2<hr>Team3<hr></div></span>
+
         <p>http://Team1.dure.com</p>
         <div class="route-menu">
             <router-link :to="{name:'Signin'}">업무자료</router-link><p></p>
@@ -32,8 +35,14 @@ export default {
     },
     data(){
         return {
-            isActive:false,
+            isStatusOn : false,
+            isActive : false,
             name : 'user1'    // sample user
+        };
+    },
+    methods:{
+        showDropMenu(){
+            this.isStatusOn = !this.isStatusOn;
         }
     }
 }
@@ -59,6 +68,18 @@ a{
     color:white;
     text-decoration: none;
     font-weight: bold;
+}
+.drop-menu{
+    margin-top:15px;
+    width:140px;
+    border-radius: 0.3rem;
+    height:150px;
+    font-size: 17px;
+    padding-top: 5px;
+    color:rgb(66, 66, 66);
+    font-weight: 500;
+    text-align:center;
+    background-color: rgba(240, 240, 240, 0.952);
 }
 .sidebar-menu span{
     position: fixed;
@@ -126,6 +147,12 @@ hr{
 button.img-button img{
     height:23px;
     width:23px;
+}
+
+.drop-menu-icon{
+    margin-left:120px;
+    width: 15px;
+    height: 10px;
 }
 
 </style>

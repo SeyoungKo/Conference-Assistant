@@ -1,6 +1,6 @@
 <template>
     <div class="team-list">
-        <router-link class="router-profile ":to="{name: 'Signup'}">프로필 변경</router-link>
+        <router-link class="router-profile" :to="{name: 'Signup'}">프로필 변경</router-link>
         <router-link clsss="router-main" :to="{name: 'MainPage'}"><div class="team-item">
         <img class="close" src="../img/close.png">
         <img src="../img/dure_team_profile.png">
