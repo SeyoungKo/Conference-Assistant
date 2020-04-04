@@ -8,20 +8,25 @@
         <p style="margin-left:100px;">http://Team1.dure.com</p>
         </div>
         <button type="button" @click="showModal">팀 추가하기</button>
-        <CreateTeamModal v-show="isModalVisible" @close="closeModal"/>
+        <AddTeamModal v-show="isModalVisible" @close="closeModal" @create="showSecondModal"/>
+        <CreateTeamModal v-if="isStatusOn"  @close="closeSecondModal"/>
     </div>
 </template>
 <script>
+import AddTeamModal from '../components/AddTeamModal'
 import CreateTeamModal from '../components/CreateTeamModal'
 
 export default {
     name : 'TeamList',
     components:{
+        AddTeamModal,
         CreateTeamModal
     },
     data(){
         return{
-            isModalVisible: false
+            isStatusOn : false, // 두번째 모달 v-show
+            isModalVisible: false,
+            isSecondModalVisible : false
         };
     },
     methods:{
@@ -30,6 +35,16 @@ export default {
         },
         closeModal(){
             this.isModalVisible = false;
+        },
+        showSecondModal(){
+            this.isModalVisible = false; // 첫번째 모달 false
+            this.isStatusOn = true;
+            this.isModalVisible = true;
+        },
+        closeSecondModal(){
+            this.isStatusOn= false;
+            this.isModalVisible = false;
+            this.isSecondModalVisible = false;
         }
     }
 }

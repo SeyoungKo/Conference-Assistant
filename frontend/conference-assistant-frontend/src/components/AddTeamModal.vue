@@ -1,6 +1,6 @@
 <template>
   <transition name="modal-fade">
-    <div class="create-team-modal">
+    <div class="add-team-modal">
       <div class="modal"
         role="dialog"
         aria-labelledby="modalTitle"
@@ -11,7 +11,8 @@
           id="modalTitle"
           >
           <slot name="header">
-            <span class="phrase"><p>팀 생성하기</p></span>
+            참여중인 팀
+            <span class="phrase">이 있습니까?</span>
             <button
               type="button"
               class="btn-close"
@@ -25,15 +26,14 @@
           id="modalDescription"
         >
           <slot name="body">
-            <input type="text" placeholder="   팀 명을 입력해주세요."/>
-
+            <input type="text" placeholder="   팀 URL을 입력해주세요."/>
           </slot>
-            <p class="alert-phrase">팀 명은 영문 혹은 영문 숫자를 혼합한 2~15 이내의 글자만 사용 가능합니다.</p>
         </section>
+
         <footer class="modal-footer">
           <slot name="footer">
-            <button type="button" class="btn-gray" @click="close" aria-label="Close modal">Cancle</button>
-            <button type="button" class="btn-green" @click="close" aria-label="Close modal">OK</button>
+            <button type="button" class="btn-green" @click="create" aria-label="Close modal">팀 생성하기</button>
+            <button type="button" class="btn-gray" @click="close" aria-label="Close modal">OK</button>
           </slot>
         </footer>
       </div>
@@ -43,15 +43,14 @@
 
 <script>
   export default {
-    name: 'CreateTeamModal',
+    name: 'AddTeamModal',
     methods: {
       close() {
         this.$emit('close');
       },
       create(){
         //  팀 생성하기 모달 창 연결
-        this.$emit('close');
-
+        this.$emit('create');
       }
     },
   };
@@ -66,7 +65,7 @@
   .modal-fade-leave-active {
     transition: opacity .3s ease
   }
-  .create-team-modal {
+  .add-team-modal {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -100,23 +99,17 @@
     border-bottom: 1px solid #eeeeee;
     color:#32a852;
     font-size: 23px;
-    text-align: center;
+    text-align:center;
     font-weight: 800;
     margin-left: 25%;
     justify-content: space-between;
   }
 
-  .phrase {
-    margin-top:20px;
-    margin-left: 65px;
-    text-align:center;
-    color:rgb(77, 77, 77);
+  .phrase{
+      margin-left: -95px;
+      color:rgb(77, 77, 77);
   }
 
-  .alert-phrase{
-    margin-top:10px;
-    font-size:13px;
-  }
   .modal-footer {
     border-top: 1px solid #eeeeee;
     justify-content: flex-end;
@@ -150,7 +143,8 @@
 }
 
 button.btn-gray {
-    margin-top:-15px;
+    margin-top: 7px;
+    /* margin-left: 100px; */
     margin-right: 20px;
     height:50px;
     width:50%;
@@ -162,7 +156,8 @@ button.btn-gray {
     border-radius: 0.3rem;
   }
   button.btn-green {
-    margin-top: -15px;
+    margin-top: 7px;
+    margin-right: 10px;
     height:50px;
     width:50%;
     background: #32a852;
