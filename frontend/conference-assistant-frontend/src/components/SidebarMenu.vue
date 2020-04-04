@@ -2,8 +2,10 @@
     <div class="sidebar-menu">
         <img src="../img/dure_default.png"><router-link :to="{name:'MainPage'}" style="position:absolute;font-size:23px;font-weight:900">&nbsp;&nbsp;Team1</router-link>
         <span><img class="drop-menu-icon" src="../img/drop_menu.png" v-on:click="showDropMenu">
-        <div v-if="isStatusOn" class="drop-menu">Team2<hr>Team3<hr></div></span>
-
+        <div v-if="isStatusOn" class="drop-menu">
+            Team2<hr>
+            Team3<hr>
+        </div></span>
         <p>http://Team1.dure.com</p>
         <div class="route-menu">
             <router-link :to="{name:'Signin'}">업무자료</router-link><p></p>

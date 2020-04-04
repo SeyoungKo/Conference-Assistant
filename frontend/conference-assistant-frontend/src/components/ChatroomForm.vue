@@ -2,7 +2,12 @@
     <div class="chatroom-form">
         <h4 class="chat-title"><span>채팅방 제목</span></h4><button type="button"><img src="../img/menu.png"></button>
          <div class="page-container">
-          <textarea class="textarea" v-model="textarea" disabled v-auto-scroll-bottom></textarea>
+          <div class="textarea"  disabled v-auto-scroll-bottom>
+              <div class="messages" v-for="(msg, index) in messages" :key="index">
+                  <p><span class="font-weight-bold"></span>&nbsp;{{ msg.message }} </p>
+                  <p class="date">{{moment(date).format('MM-DD mm:ss')}}</p>
+              </div>
+          </div>
         <div class="input_div">
           <div class="file_input_div">
              <img src="../img/fileupload.png" class="file_input_img_btn" alt="open" />
@@ -17,28 +22,31 @@
     </div>
 </template>
 <script>
+import moment from 'moment';
+
 export default {
     name: 'ChatroomForm',
 
-    created(){
-        this.$socket.on('chat', (data)=>{
-            this.textarea += data.message + '\n'
-        })
-    },
     data(){
         return{
-            textarea : "",
             message : '',
+            messages : []
         }
     },
     methods: {
         sendMessage(){
-            this.$socket.emit('chat',{
+            this.$socket.emit('SEND_MESSAGE',{
                 message: this.message
             });
-            this.textarea += this.message +'\n'
             this.message = ''
         }
+    },
+    mounted(){
+        this.$socket.on('MESSAGE', (data)=>{
+            if(data.message.length !=0){
+                this.messages = [...this.messages,data];
+            }
+       });
     }
 }
 </script>
@@ -73,7 +81,8 @@ button img{
   height:420px;
   margin-left: 10%;
   margin-bottom: -130px;
-  width:163%
+  width:163%;
+  overflow-y:scroll;
 }
 .page-container{
   height: 700px;
@@ -146,5 +155,21 @@ input[type="text"]{
     -ms-filter: alpha(opacity=0);
     cursor:pointer;
 }
-
+.messages{
+    width:50%;
+    height:65px;
+    padding-top:22px;
+    padding-left:9px;
+    font-size:14px;
+    color:rgb(39, 39, 39);
+    font-weight: 500;
+    background-color:rgb(212, 234, 245);
+    margin-top:10px;
+    border-radius : 0.5rem;
+}
+.date{
+    font-size:12px;
+    color:gray;
+    margin-left: 68%;
+}
 </style>
