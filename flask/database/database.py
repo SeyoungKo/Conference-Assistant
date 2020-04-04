@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import re
 import json
 import pandas as pd
 import datetime
@@ -30,17 +31,28 @@ coll = db.chats
 
 # coll.insert(post)
 
-coll_list = db.collection_names()
+coll_list = db.list_collection_names()
 # collection 목록 보기
 
-for chats in coll.find():print(chats.get('contents'))
+for chats in coll.find():
+    rtn_chats =chats.get('contents')
+    text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', rtn_chats)
+    re
+    print(text)
+
 # users에 저장된 도큐먼트 모두 불러오기
 
 # res = json.dumps(chats, default=str)
 # json 직렬화 (serialize)
 
-
 # chats collection에서 불러온 json타입 데이터에서 contents 문자열 가져오기
 
 
+# def cleanText(rtn_chats):
+#     for msg in (str)(rtn_chats.values()):
+#         text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '',msg)
+#         print(text)
+#         return text
+
+# cleanText(chats)
 

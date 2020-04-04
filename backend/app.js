@@ -174,7 +174,7 @@ app.get('/', function(req, res) {
 io.on('connection' , function(socket) {
         console.log('Connect from Client: '+socket)
 
-        socket.on('chat', function(data){
+        socket.on('SEND_MESSAGE', function(data){
         console.log('message from Client: '+data.message)
 
         var rtnMessage = { message: data.message };
@@ -183,7 +183,9 @@ io.on('connection' , function(socket) {
         var msg = data.message;
 
         // send message to client
-        socket.broadcast.emit('chat', rtnMessage);
+        console.log("type:" + typeof(data));
+
+        io.emit('MESSAGE', data);
             if(database){
                 chat.addChat(database,'test sender', msg, function(err,result){
                     if(err){
