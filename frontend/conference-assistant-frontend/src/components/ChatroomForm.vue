@@ -2,11 +2,13 @@
     <div class="chatroom-form">
         <h4 class="chat-title"><span>채팅방 제목</span></h4><button type="button"><img src="../img/menu.png"></button>
          <div class="page-container">
-          <div class="textarea"  disabled v-auto-scroll-bottom>
+          <div class="textarea">
               <div class="messages" v-for="(msg, index) in messages" :key="index">
-                  <p><span class="font-weight-bold"></span>&nbsp;{{ msg.message }} </p>
+                  <img class="profile-img" src="../img/profile.png">
+                  <p class="user-name-p">user1</p>
+                  <p><span class="font-weight-bold"></span>&nbsp;&nbsp;{{ msg.message }} </p>
                   <p class="date">{{moment(date).format('MM-DD mm:ss')}}</p>
-              </div>
+          </div>
           </div>
         <div class="input_div">
           <div class="file_input_div">
@@ -159,7 +161,7 @@ input[type="text"]{
     width:50%;
     height:65px;
     padding-top:22px;
-    padding-left:9px;
+    margin-left:40px;
     font-size:14px;
     color:rgb(39, 39, 39);
     font-weight: 500;
@@ -171,5 +173,22 @@ input[type="text"]{
     font-size:12px;
     color:gray;
     margin-left: 68%;
+}
+
+.profile-img{
+    position:absolute;
+    z-index: 2;
+    margin-left: -60px;
+    margin-top:-23px;
+    width:50px;
+    height:50px;
+    overflow :inherit;
+}
+.user-name-p{
+    position: absolute;
+    z-index: 2;
+    margin-top:28px;
+    margin-left: -52px;
+    overflow: inherit;
 }
 </style>

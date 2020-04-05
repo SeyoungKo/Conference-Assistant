@@ -23,28 +23,42 @@
             <img src="../img/offline.png"><button type="button" class="btn">user2</button>
         </div>
         <div class="chat-list">
-            <h5>채팅방 목록<span><button type="button" class="img-button"><img src="../img/chat_add.png"></button></span></h5>
+            <h5>채팅방 목록<span><button type="button" class="img-button"><img src="../img/chat_add.png" @click="showCreateChatroomForm" ></button></span></h5>
+            <CreateChatroomForm v-if="isClicked" @close="closeCreateChatroomForm"></CreateChatroomForm>
         </div>
 
 </div>
 </template>
 <script>
 import ShowProfileForm from './ShowProfileForm'
+import CreateChatroomForm from './CreateChatroomForm'
+
 export default {
     name: 'SidebarMenu',
     components:{
-      ShowProfileForm
+      ShowProfileForm,
+      CreateChatroomForm
     },
     data(){
         return {
             isStatusOn : false,
             isActive : false,
-            name : 'user1'    // sample user
+            name : 'user1',    // sample user,
+            isClicked : false,
+            isClosedOn : false
         };
     },
     methods:{
         showDropMenu(){
             this.isStatusOn = !this.isStatusOn;
+        },
+        showCreateChatroomForm(){
+            // 채팅방 생성하기
+            this.isClicked = !this.isClicked;
+        },
+        closeCreateChatroomForm(){
+            this.isClosedOn = !this.isClosedOn;
+            this.isClicked = !this.isClicked;
         }
     }
 }

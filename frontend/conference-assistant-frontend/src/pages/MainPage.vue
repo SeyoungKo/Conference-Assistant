@@ -21,7 +21,7 @@ export default {
         ChatroomForm,
         SelectedChatForm,
         AIKeywordListForm,
-        AIMediationForm
+        AIMediationForm,
     }
 }
 </script>
