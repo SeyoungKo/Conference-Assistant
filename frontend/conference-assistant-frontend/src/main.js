@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import VModal from 'vue-js-modal'
 import moment from "moment";
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Vue.use(BootstrapVue)
 
