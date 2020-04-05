@@ -6,6 +6,7 @@ import TeamListPage from '../pages/TeamListPage'
 import MainPage from '../pages/MainPage'
 import SidebarMenu from '../components/SidebarMenu'
 import TimelinePage from '../pages/TimelinePage'
+import FileStoragePage from '../pages/FileStoragePage'
 
 //헤더 컴포넌트
 import AppHeader from '../components/AppHeader'
@@ -57,6 +58,15 @@ export default new Router({
       components:{
         header : SidebarMenu,
         default : TimelinePage
+      },
+      props : true
+    },
+    {
+      path:'/file',
+      name:'FileStoragePage',
+      components:{
+        header : SidebarMenu,
+        default : FileStoragePage
       },
       props : true
     }

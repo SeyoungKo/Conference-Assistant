@@ -121,7 +121,7 @@ a{
     display: inline;
 }
 .team-item .team-name{
-    left : -180px;
+    left : -128px;
     font-size : 23px;
     font-weight: 700;
 }

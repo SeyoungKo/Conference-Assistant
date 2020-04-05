@@ -61,7 +61,5 @@ img{
 p{
      margin-top:30px;
 }
-span{
 
-}
 </style>

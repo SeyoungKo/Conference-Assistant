@@ -10,7 +10,9 @@
           class="modal-header"
           id="modalTitle"
           >
-          <slot name="header">
+          <slot name="header" class="representative-phrase-p">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;
             비밀번호가 생각나지 않으세요?
             <button
               type="button"
@@ -25,8 +27,8 @@
           id="modalDescription"
         >
           <slot name="body">
-            <p>비밀번호를 전송받을 이메일을 입력하세요.</p>
-            <input type="email" placeholder="이메일을 입력해주세요."/>
+            <p >비밀번호를 전송받을 이메일을 입력하세요.</p>
+            <input type="email" placeholder="  이메일을 입력해주세요."/>
           </slot>
         </section>
 
@@ -58,10 +60,11 @@
 
   .modal-fade-enter-active,
   .modal-fade-leave-active {
-    transition: opacity .5s ease
+    transition: opacity .3s ease
   }
   .find-password-modal {
     position: fixed;
+    margin-top:-80px;
     top: 0;
     bottom: 0;
     left: 0;
@@ -73,9 +76,8 @@
   }
 
   .modal {
-
     height:30%;
-    width:70%;
+    width:60%;
     margin:15%;
     border-radius: 0.8rem;
     background: rgb(235, 235, 235);
@@ -109,6 +111,7 @@
     position: relative;
     padding: 20px 10px;
   }
+
   p{
     margin-left: -5%;
     text-align: center;
@@ -155,5 +158,8 @@ button.btn-gray {
     font-weight: bold;
     border: 1px solid #32a852;
     border-radius: 0.7rem;
+  }
+  ::placeholder{
+    font-size:14px;
   }
 </style>
