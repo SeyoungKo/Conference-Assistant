@@ -1,11 +1,13 @@
 <template>
     <div class="chatroom-form">
-        <h4 class="chat-title"><span>채팅방 제목</span></h4><button type="button"><img src="../img/menu.png"></button>
+        <h4 class="chat-title"><span>채팅방 제목</span></h4>
+        <button class="goto-minutes-btn" type="button"><router-link :to="{name:'CreateMinutesPage'}">회의록 생성</router-link></button>
+        <!-- <button type="button"><img src="../img/menu.png"></button> -->
          <div class="page-container">
           <div class="textarea">
               <div class="messages" v-for="(msg, index) in messages" :key="index">
-                  <img class="profile-img" src="../img/profile.png">
-                  <p class="user-name-p">user1</p>
+                  <div class="profile-div"><img class="profile-img" src="../img/profile.png">
+                  <p class="user-name-p">user1</p></div>
                   <p><span class="font-weight-bold"></span>&nbsp;&nbsp;{{ msg.message }} </p>
                   <p class="date">{{moment(date).format('MM-DD mm:ss')}}</p>
           </div>
@@ -167,6 +169,7 @@ input[type="text"]{
     font-weight: 500;
     background-color:rgb(212, 234, 245);
     margin-top:10px;
+    overflow:inherit;
     border-radius : 0.5rem;
 }
 .date{
@@ -190,5 +193,37 @@ input[type="text"]{
     margin-top:28px;
     margin-left: -52px;
     overflow: inherit;
+}
+.goto-minutes-btn{
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-left: 5px;
+    border-radius: 0.3rem;
+    background-color:rgb(192, 192, 192);
+    color:white;
+    font-weight: 700;
+    width:15%;
+}
+.goto-minutes-btn:hover{
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-left: 5px;
+    border-radius: 0.3rem;
+    background-color:rgb(241, 241, 241);
+    color:#32a852;
+    font-weight: 700;
+    width:15%;
+}
+a{
+     text-decoration:none;
+     color:white;
+     font-size:14px;
+}
+a:hover{
+    color:#32a852;
+    font-size:14px;
+}
+.profile-div{
+    overflow-y:scroll;
 }
 </style>

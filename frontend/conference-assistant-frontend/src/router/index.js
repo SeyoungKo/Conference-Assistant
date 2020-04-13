@@ -7,6 +7,8 @@ import MainPage from '../pages/MainPage'
 import SidebarMenu from '../components/SidebarMenu'
 import TimelinePage from '../pages/TimelinePage'
 import FileStoragePage from '../pages/FileStoragePage'
+import CreateMinutesPage from '../pages/CreateMinutesPage'
+import MinutesListPage from '../pages/MinutesListPage'
 
 //헤더 컴포넌트
 import AppHeader from '../components/AppHeader'
@@ -69,7 +71,23 @@ export default new Router({
         default : FileStoragePage
       },
       props : true
+    },
+    {
+      path:'/write',
+      name:'CreateMinutesPage',
+      components:{
+        header:SidebarMenu,
+        default:CreateMinutesPage
+      },
+      props:true
+    },
+    {
+      path:'/list',
+      name:'MinutesListPage',
+      components:{
+        header:SidebarMenu,
+        default:MinutesListPage
+      }
     }
-
   ]
 })
