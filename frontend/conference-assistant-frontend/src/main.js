@@ -5,8 +5,7 @@ import App from './App'
 import router from './router'
 import VModal from 'vue-js-modal'
 import moment from "moment";
-
-// Vue.use(BootstrapVue)
+import ToggleButton from 'vue-js-toggle-button'
 
 import Directives from './plugins/directives';
 import io from 'socket.io-client';
@@ -18,6 +17,9 @@ Vue.prototype.$socket =socket;
 
 Vue.use(Directives)
 Vue.prototype.moment = moment;
+
+Vue.use(ToggleButton)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
