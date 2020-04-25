@@ -186,7 +186,7 @@ io.on('connection' , function(socket) {
         console.log("type:" + typeof(data));
 
         io.emit('MESSAGE', data);
-            if(database){
+            if(database && msg != ''){
                 chat.addChat(database,'test sender', msg, function(err,result){
                     if(err){
                         throw err;
