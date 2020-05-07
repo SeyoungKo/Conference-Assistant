@@ -5,15 +5,10 @@ import threading
 import csv
 import app
 
+from flask_socketio import SocketIO
+
 from numpy import matrix
 from pymongo import MongoClient
-
-# from textmining_dataset.lovit_textmining_dataset.navernews_10days import get_news_paths as lv
-from soynlp.utils import DoublespaceLineCorpus
-
-from soynlp.noun import LRNounExtractor
-# from soynlp.tokenizer import NounLMatchTokenizer
-# from soynlp.tokenizer import NounMatchTokenizer
 
 from soynlp.tokenizer import RegexTokenizer
 from collections import Counter
@@ -42,6 +37,7 @@ corpus = None
 noun_scores = None
 cnt =0
 rtn_keyword = ''
+noun_list=''
 
 # match_tokenizer = NounMatchTokenizer(noun_scores=noun_scores)
 
@@ -114,7 +110,6 @@ class AsyncTask:
                 # print("re:" + text)
 
                 tokenizer = RegexTokenizer()
-                # print(tokenizer.tokenize(text))
 
                 okt = Okt()
                 noun = okt.nouns(text)
@@ -126,21 +121,7 @@ class AsyncTask:
                     rtn_keyword = v
                     print(v)
 
-                count += 1
-
-                # path = lv(date='2016-10-20')
-                # corpus = DoublespaceLineCorpus(matrix, iter_sent=True)
-                # noun_extractor = LRNounExtractor()
-                # nouns= noun_extractor.train_extract(text)
-                #
-                # noun_scores = {noun:score.score for noun, score in noun_scores.items()}
-                #
-                # lmatch_tokenizer= NounLMatchTokenizer(nouns=noun_scores)
-                # match_tokenizer = NounMatchTokenizer(noun_scores=noun_scores)
-                #
-                # print(lmatch_tokenizer.tokenize(matrix))
-                # for word in text.split():
-                #     print(word, word in noun_scores)
+            count += 1
 
         threading.Timer(3,self.TaskA).start()
 

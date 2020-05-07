@@ -164,11 +164,9 @@ app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next(); });
 
-
 app.get('/', function(req, res) {
     res.sendFile('Server on');
 });
-
 
 //connection event handler
 io.on('connection' , function(socket) {
