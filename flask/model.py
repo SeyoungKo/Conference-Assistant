@@ -3,6 +3,7 @@ import re
 import sys
 import threading
 import csv
+import textrank
 import app
 
 from flask_socketio import SocketIO
@@ -111,15 +112,24 @@ class AsyncTask:
 
                 tokenizer = RegexTokenizer()
 
-                okt = Okt()
-                noun = okt.nouns(text)
-                cnt = Counter(noun)
+                # okt = Okt()
+                # noun = okt.nouns(text)
+                # cnt = Counter(noun)
+
                 # 명사 빈도 추출
 
-                noun_list = cnt.most_common(3)
-                for v in noun_list:
-                    rtn_keyword = v
-                    print(v)
+                textrank.init(text)
+                tr = textrank.TextRank()
+                tr.build()
+                tr.extract()
+
+                rtn_keyword = textrank.kw
+                print("rtn_keyword:", rtn_keyword)
+
+                # noun_list = cnt.most_common(3)
+                # for v in noun_list:
+                #     rtn_keyword = v
+                #     print(v)
 
             count += 1
 

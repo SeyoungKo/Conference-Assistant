@@ -3,7 +3,9 @@ import networkx
 import model
 import app
 
-rtn_final = ''
+rtn_final =[]
+stopword =''
+kw = ''
 
 class RawSentence:
     def __init__(self, textIter):
@@ -175,8 +177,8 @@ class TextRank:
 
         for (k, l) in sorted(pairness, key=pairness.get, reverse=True):
             # print(k[0], l[0], pairness[k, l])
-            rtn_final = k[0] + l[0]
-            model.rtn_keyword = rtn_final
+            rtn_final.append(k[0] + l[0])
+
             if k not in startOf: startOf[k] = (k, l)
 
         for (k, l), v in pairness.items():
@@ -198,12 +200,13 @@ class TextRank:
         for k in sorted(tuples, key=tuples.get, reverse=True):
             if used.intersection(set(k)): continue
             both[k] = tuples[k]
+
             for w in k: used.add(w)
 
         # for k in cand:
         #    if k not in used or True: both[k] = ranks[k] * self.getI(k)
 
-        return both
+        return rtn_final
 
     def summarize(self, ratio=0.333):
         r = self.rank()
@@ -216,6 +219,8 @@ def f(t, d):
 
 
 def init(text):
+    global kw
+
     tr = TextRank(window=5, coef=0)
     sent = text
 
@@ -225,6 +230,7 @@ def init(text):
     tr.build()
     kw = tr.extract(1)
 
-# for k in sorted(kw, key=kw.get, reverse=True):
-#     print("%s\t%g" % (k, kw[k]))
+# if __name__ == '__main__':
+#     tr = TextRank()
+#     tr.build()
 
