@@ -1,16 +1,18 @@
 <template>
     <div class="aikeyword-list-form">
         <h4>AI가 찾은 키워드</h4>
-
          <div v-if="keywords && keywords.length >0">
-            <div class="keywords" v-for="(keyword, index) in rtn_keywords" :key="index" >
-                <span>{{keyword}}</span>
+            <div class="keywords" v-for="(keyword, index) in rtn_keywords" :key="index" v-on:click="handleSelectedKeyword(keyword, index)" >
+                <button class="btn-item" >{{keyword}}</button>
             </div>
+            <p>{{room_idx}}</p>
          </div>
     </div>
 </template>
 <script>
 import SocketIo from 'socket.io-client'
+import {EventBus} from '../EventBus'
+
 export default {
     name: 'AIKeywordListForm',
     data(){
@@ -58,10 +60,14 @@ export default {
                  }
                 return this.rtn_keywords;
             }
+        },
+        handleSelectedKeyword(keyword, index){
+            EventBus.$emit('keyword', keyword, index);
         }
     },
     mounted(){
         this.newSocket()
+
     }
 }
 </script>
@@ -91,5 +97,20 @@ p{
     margin-left: -20%;
     color:gray;
     width:300px;
+}
+.btn-item{
+    border-radius: 1.7rem;
+    background-color: #69a77a;
+    margin-left: -20%;
+    padding:6% 10% 5%;
+    margin-bottom: 7%;
+    color:#eeeeee;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+}
+.btn-item:hover{
+    background-color: #4b7556;
+    text-decoration:underline;
 }
 </style>

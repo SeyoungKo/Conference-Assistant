@@ -14,6 +14,7 @@ const socket = io('http://localhost:8080'); // socket server
 Vue.use(VModal, {dynamic: true})
 Vue.config.productionTip = false
 Vue.prototype.$socket =socket;
+Vue.prototype.EventBus = new Vue();
 
 Vue.use(Directives)
 Vue.prototype.moment = moment;
