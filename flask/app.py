@@ -1,16 +1,29 @@
 import os
 import sys
 import os
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, jsonify
+from flask_cors import CORS, cross_origin
 from flask_socketio import SocketIO, emit
+import database
+
 
 import model
 
-# sys.path.insert(0,"model.py")
-
+req_keyword = ''
 
 app = Flask(__name__)
 socketio = SocketIO(app, ping_timeout=2, cors_allowed_origins="*")
+cors = CORS(app, resources={r"/foo": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+# 요청 키워드를 포함한 채팅 반환
+@app.route('/keyword/<keyword>')
+@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+def GET(keyword):
+    req_keyword = keyword
+    rtn_msgs =database.selected_chat(req_keyword)
+
+    return jsonify(rtn_msgs)
 
 @socketio.on('connect', namespace='/corekeyword') # namespace : 연결할 socket 식별
 def connect():

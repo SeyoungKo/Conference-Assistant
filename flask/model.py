@@ -20,27 +20,14 @@ client = MongoClient()
 
 matrix = []
 
-f = open('/Users/seyoung/Conference-Assistant/Conference-Assistant/flask/chat_corpus.csv','r')
-csvReader = csv.reader(f)
-# 단어 경계학습을 위한 챗봇(대화체) 데이터 코퍼스
-
-for row in csvReader:
-    matrix.append(row)
-    # print(row)
-f.close()
-
 client = MongoClient('mongodb://localhost:27017/local')
 
 count =0
 tmp_data = ''
 text=''
-corpus = None
-noun_scores = None
 cnt =0
 rtn_keyword = ''
 noun_list=''
-
-# match_tokenizer = NounMatchTokenizer(noun_scores=noun_scores)
 
 # 쓰레드로 가져온 최근 값
 
@@ -59,8 +46,6 @@ class AsyncTask:
         global count
         global tmp_data
         global text
-        global corpus
-        global noun_scores
         global cnt
         global rtn_keyword
         # 전역변수 사용
@@ -99,7 +84,6 @@ class AsyncTask:
                 rtn_msg = doc["contents"]
 
                 tmp_data = rtn_msg
-                # print(tmp_data)
                 count += 1
 
             elif doc !=" " and tmp_data != doc["contents"] :
@@ -108,13 +92,8 @@ class AsyncTask:
 
                 # print(tmp_data)
                 text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', tmp_data)
-                # print("re:" + text)
 
                 tokenizer = RegexTokenizer()
-
-                # okt = Okt()
-                # noun = okt.nouns(text)
-                # cnt = Counter(noun)
 
                 # 명사 빈도 추출
 
@@ -125,11 +104,6 @@ class AsyncTask:
 
                 rtn_keyword = textrank.kw
                 print("rtn_keyword:", rtn_keyword)
-
-                # noun_list = cnt.most_common(3)
-                # for v in noun_list:
-                #     rtn_keyword = v
-                #     print(v)
 
             count += 1
 

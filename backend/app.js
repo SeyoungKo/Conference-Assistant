@@ -35,7 +35,7 @@ var config = require('./config');
 var chat = require('./routes/chat');
 
 var ChatSchema = require('./database/database');
-var ChatModel ;
+var ChatModel = require('./database/chat_schema');
 
 var app = express();
 
