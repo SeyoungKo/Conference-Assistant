@@ -14,7 +14,6 @@
 export default {
     name : 'ShowProfileForm',
     props: ['propsname'],
-
 }
 </script>
 <style scoped>

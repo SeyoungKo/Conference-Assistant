@@ -4,8 +4,10 @@
             <p class="p-checkinfo">키워드를 선택하면 회의 내용이 보여집니다.</p>
         </div>
         <div>
-            <p class="p-selectedKeyword">{{selected_keyword}}</p><p class="p-msg">{{msg}}</p>
+            <p class="p-selectedKeyword">{{selected_keyword}}</p><p class="p-msg">{{info_msg}}</p>
         </div>
+            <p class="p-selectedMsg">{{msg}}</p>
+        <p></p>
     </div>
 </template>
 <script>
@@ -17,20 +19,21 @@ export default {
         return{
             selected_keyword:' ',
             key_index : '',
-            msg : '',
-            clicked : false
+            info_msg : '',
+            clicked : false,
+            msg : ''
         }
     },
-    mounted(){
-        EventBus.$on('keyword', keyword=>{
-           this.selected_keyword = '\'' + keyword + '\''
-           this.msg = '에 대한 회의 내용입니다.'
+    beforeMount(){
+        EventBus.$on('event', (obj)=>{
+           this.selected_keyword = '\'' + obj.keyword + '\''
+           this.info_msg = '에 대한 회의 내용입니다.'
+           this.msg = obj.msg
 
            if(this.clicked == false){
                this.clicked = !this.clicked
            }
-           $("p:contains(keyword)").css({color:"red"});
-        });
+        })
     }
 }
 </script>

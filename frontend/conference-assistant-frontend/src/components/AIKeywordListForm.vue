@@ -5,23 +5,29 @@
             <div class="keywords" v-for="(keyword, index) in rtn_keywords" :key="index" v-on:click="handleSelectedKeyword(keyword, index)" >
                 <button class="btn-item" >{{keyword}}</button>
             </div>
-            <p>{{room_idx}}</p>
          </div>
     </div>
 </template>
 <script>
 import SocketIo from 'socket.io-client'
 import {EventBus} from '../EventBus'
+import axios from 'axios'
+
+const APIcore = axios.create({
+    baseURL : 'http://localhost:8080/api'
+});
 
 export default {
     name: 'AIKeywordListForm',
+
     data(){
         return {
             room_idx : '',
             keywords : [],
             socket : null,
             keyword : '',
-            rtn_keywords : []
+            rtn_keywords : [],
+            rtn_chatdata : ''
         }
     },
     props:{
@@ -62,12 +68,20 @@ export default {
             }
         },
         handleSelectedKeyword(keyword, index){
-            EventBus.$emit('keyword', keyword, index);
+
+            axios.get('http://127.0.0.1:5000/keyword/'+`${keyword}`, keyword).then(res=>{
+
+                // return data
+                 this.rtn_chatdata = res.data
+            });
+               EventBus.$emit('event', {
+                   keyword : keyword,
+                   msg : this.rtn_chatdata
+               });
         }
     },
     mounted(){
         this.newSocket()
-
     }
 }
 </script>

@@ -1,8 +1,8 @@
-// axios 기본 설정
+// // axios 기본 설정
 
-import axios from 'axios'
+// import axios from 'axios'
 
-export default axios.create({
-    baseURL : '//localhost:8000/api'
+// export default axios.create({
+//     baseURL : 'httpL://localhost:8080/api'
 
-})
+// })

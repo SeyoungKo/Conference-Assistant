@@ -17,6 +17,11 @@ import AIManagerForm from '../components/AIManagerForm'
 
 export default {
     name:'MainPage',
+    data(){
+      return{
+          props: ['msgs']
+      }
+    },
     components:{
         SidebarMenu,
         ChatroomForm,
