@@ -3,11 +3,13 @@
         <div v-if="clicked == false">
             <p class="p-checkinfo">키워드를 선택하면 회의 내용이 보여집니다.</p>
         </div>
-        <div>
+        <div class="div-msg">
             <p class="p-selectedKeyword">{{selected_keyword}}</p><p class="p-msg">{{info_msg}}</p>
         </div>
-            <p class="p-selectedMsg">{{msg}}</p>
-        <p></p>
+        <div v-for="(m, index) in msg" :key="index">
+            <p class="p-selectedMsg">{{m}}</p>
+        </div>
+        <p v-if="!msg.length && clicked==true" class="p-nullMsg">회의 내용이 없습니다.</p>
     </div>
 </template>
 <script>
@@ -21,7 +23,7 @@ export default {
             key_index : '',
             info_msg : '',
             clicked : false,
-            msg : ''
+            msg : '',
         }
     },
     beforeMount(){
@@ -50,6 +52,7 @@ export default {
    border: 1px solid  #eeeeee;
    box-shadow: 4px 4px 2px rgb(233, 233, 233);
    border-radius: 1.2rem;
+   overflow-y: scroll;
 }
 .p-checkinfo{
     text-align:center;
@@ -68,5 +71,29 @@ export default {
     display: inline-block;
     font-weight: 750;
     font-size: 19px;
+}
+.p-selectedMsg{
+    margin-top:2.5%;
+    background: #ececec;
+    font-size: 14px;
+    width:114%;
+    margin-left:-7%;
+    padding: 5px 5px;
+    padding-bottom: 2%;
+    color:#646464;
+    border-radius: 0.3rem;
+}
+.div-msg{
+    padding:10 10 10 10;
+    position: fixed;
+    top:105px;
+    width:100%;
+}
+.p-nullMsg{
+    padding-top:14%;
+    text-align: center;
+    font-size : 16px;
+    color: rgb(168, 168, 168);
+
 }
 </style>
