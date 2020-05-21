@@ -27,7 +27,7 @@
 </template>
 <script>
 import moment from 'moment';
-
+import {EventBus} from '../EventBus'
 export default {
     name: 'ChatroomForm',
 
@@ -49,6 +49,10 @@ export default {
         this.$socket.on('MESSAGE', (data)=>{
             if(data.message.length !=0){
                 this.messages = [...this.messages,data];
+
+                EventBus.$emit('first',{
+                     info : '회의를 시작합니다.'
+                 });
             }
        });
     }

@@ -6,11 +6,14 @@ import router from './router'
 import VModal from 'vue-js-modal'
 import moment from "moment";
 import ToggleButton from 'vue-js-toggle-button'
+// import Vuetify from 'vuetify'
+// import 'vuetify/dist/vuetify.min.css'
 
 import Directives from './plugins/directives';
 import io from 'socket.io-client';
-const socket = io('http://localhost:8080'); // socket server
+const socket = io('http://localhost:8080/chat'); // socket server namespace : /chat
 
+// Vue.use(Vuetify)
 Vue.use(VModal, {dynamic: true})
 Vue.config.productionTip = false
 Vue.prototype.$socket =socket;

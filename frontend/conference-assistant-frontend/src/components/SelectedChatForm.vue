@@ -7,9 +7,9 @@
             <p class="p-selectedKeyword">{{selected_keyword}}</p><p class="p-msg">{{info_msg}}</p>
         </div>
         <div v-for="(m, index) in msg" :key="index">
-            <p class="p-selectedMsg">{{m}}</p>
+            <span class="span-selectedUser">user1</span><p class="p-selectedMsg">{{m}}</p>
         </div>
-        <p v-if="!msg.length && clicked==true" class="p-nullMsg">회의 내용이 없습니다.</p>
+        <p v-if="!msg.length && clicked==true" class="p-nullMsg">선택한 키워드에 대한 회의 내용이 없습니다.</p>
     </div>
 </template>
 <script>
@@ -36,6 +36,7 @@ export default {
                this.clicked = !this.clicked
            }
         })
+        // EventBus.$off('event');
     }
 }
 </script>
@@ -73,19 +74,24 @@ export default {
     font-size: 19px;
 }
 .p-selectedMsg{
-    margin-top:2.5%;
+    line-height:20px;
+    margin-top: 10px;
     background: #ececec;
     font-size: 14px;
-    width:114%;
-    margin-left:-7%;
-    padding: 5px 5px;
+    width:96%;
+    margin-left:-5%;
+    padding: 4px 4px;
     padding-bottom: 2%;
     color:#646464;
     border-radius: 0.3rem;
+    display:inline-block;
 }
 .div-msg{
     padding:10 10 10 10;
+    margin-left: -2%;
+    padding-top: -3%;
     position: fixed;
+
     top:105px;
     width:100%;
 }
@@ -94,6 +100,15 @@ export default {
     text-align: center;
     font-size : 16px;
     color: rgb(168, 168, 168);
+}
+.span-selectedUser{
+    color:#646464;
+    background: #ececec;
+    margin-left :-9%;
+    padding: 4px 4px;
+    padding-bottom: 5px;
+    margin-right: 7%;
+    border-radius: 0.3rem;
 
 }
 </style>

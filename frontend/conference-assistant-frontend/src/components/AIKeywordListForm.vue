@@ -6,6 +6,9 @@
                 <button class="btn-item" >{{keyword}}</button>
             </div>
          </div>
+         <div v-if="keywords && keywords.length ==0">
+             <p>AI가 발견한 키워드가 없습니다.</p>
+         </div>
     </div>
 </template>
 <script>
