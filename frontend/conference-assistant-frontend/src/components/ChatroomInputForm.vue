@@ -1,18 +1,42 @@
 <template>
     <div class="chatroom-input-form">
-            <br>
-            <p>채팅방 이름&nbsp;&nbsp;&nbsp;&nbsp;</p><input class="chatname-input" type="text"/>
-            <br><br><hr>
-            <span>회의 안건</span>
-            <img class="add-topic" src="../img/add_topic.png">
-            &nbsp;<input class="topic-input" type="text" placeholder="         추가할 회의 안건을 입력해주세요.">
-            <br><br>
-            <hr class="boundary-line-hr">
+            <form @submit.prevent="addChatInfo">
+                <br>
+                <p>채팅방 이름&nbsp;&nbsp;&nbsp;&nbsp;</p><input class="chatname-input" v-model="roomname" type="text"/>
+                <br><br><hr>
+                <span>회의 안건</span>
+
+                &nbsp;<input class="topic-input" type="text" v-model="topic" placeholder="         추가할 회의 안건을 입력해주세요.">
+                 <br><br>
+                <button type="submit"><img class="add-topic" src="../img/add_topic.png"></button>
+               <hr class="boundary-line-hr">
+            </form>
+
     </div>
 </template>
 <script>
 export default {
-    name : 'ChatroomInputForm'
+    name : 'ChatroomInputForm',
+    data(){
+        return{
+            topic : '',
+            roomname:''
+        };
+    },
+    methods:{
+        resetField(){
+            this.topic='';
+        },
+        addChatInfo(){
+            const {topic, roomname} = this;
+            const isEmpty = topic.length <=0 ;
+            if(isEmpty){
+                return false;
+            }
+            this.$emit('addChatInfo', {topic, roomname});
+            this.resetField();
+        }
+    }
 }
 </script>
 <style scoped>
@@ -23,14 +47,18 @@ export default {
     height: 45px;
     width: 345px;
 }
-.add-topic{
-    padding-top: 10px;
-    margin-left: 5%;
+img.add-topic{
+    margin-top: -50px;
+    margin-left: -65px;
     width:22px;
     height:22px;
-    position:absolute;
+}
+button{
+    background: #ffffff;
+    margin-left: 55%;
 }
 .topic-input{
+    padding-top:20px;
     margin-left: 20px;
     padding: 15px 25px 10px 10px;
     width: 355px;

@@ -10,7 +10,7 @@
                   <p class="user-name-p">user1</p></div>
                   <p><span class="font-weight-bold"></span>&nbsp;&nbsp;{{ msg.message }} </p>
                   <p class="date">{{moment(date).format('MM-DD mm:ss')}}</p>
-          </div>
+              </div>
           </div>
         <div class="input_div">
           <div class="file_input_div">

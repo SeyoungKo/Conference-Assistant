@@ -8,6 +8,8 @@ import moment from "moment";
 import ToggleButton from 'vue-js-toggle-button'
 // import Vuetify from 'vuetify'
 // import 'vuetify/dist/vuetify.min.css'
+//vue meta import
+import VueMeta from 'vue-meta'
 
 import Directives from './plugins/directives';
 import io from 'socket.io-client';
@@ -20,6 +22,13 @@ Vue.prototype.$socket =socket;
 Vue.prototype.EventBus = new Vue();
 
 Vue.use(Directives)
+
+//vue meta use
+Vue.use(VueMeta, {
+  // optional pluginOptions
+  refreshOnceOnNavigation: true
+})
+
 Vue.prototype.moment = moment;
 
 Vue.use(ToggleButton)
