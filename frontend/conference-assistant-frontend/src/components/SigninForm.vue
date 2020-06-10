@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-import FindpasswordModal from '../components/FindpasswordModal'
+import FindpasswordModal from '../modal/FindpasswordModal'
 
 export default {
 name: 'SigninForm',

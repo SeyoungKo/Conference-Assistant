@@ -9,28 +9,47 @@
                     </li>
                 </ul>
                 <button class="ok-btn" type="button" @click="close">OK</button>
+                <createChatAlertModal v-if="isModalVisible" @btnok="closeModal"></createChatAlertModal>
         </div>
     </div>
 </template>
 <script>
 import ChatroomInputForm from './ChatroomInputForm'
+import CreateChatAlertModal from '../modal/CreateChatAlertModal'
+
 export default {
     name : 'ChatTopicListForm',
     components:{
-        ChatroomInputForm
+        ChatroomInputForm,
+        CreateChatAlertModal
     },
     data(){
         return{
-            topics:[]
+            topics:[],
+            r :'',
+            t : '',
+            isModalVisible : false
         };
     },
     methods:{
-        addChatInfo(topic,roomname ){
+        addChatInfo(topic,roomname){
             // this.topics=[...this.topics, topic];
             this.topics.push(topic);
+            this.t  = topic;
+            this.r = roomname;
         },
         close(){
-            this.$emit('close');
+            if(this.t != '' && this.r !=''){
+                this.$emit('close')
+            }else{
+                this.showModal()
+            }
+        },
+        showModal(){
+            this.isModalVisible = true;
+        },
+        closeModal(){
+            this.isModalVisible = false;
         }
     }
 }

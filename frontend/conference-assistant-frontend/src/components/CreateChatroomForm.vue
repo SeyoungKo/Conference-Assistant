@@ -4,18 +4,16 @@
             <h3>채팅방 생성</h3>
             <img class="close-img" src="../img/close.png" @click="close">
             <!-- <ChatroomInputForm/> -->
-            <ChatTopicListForm/>
+            <ChatTopicListForm @close="close"/>
     </div>
 </transition>
 </template>
 <script>
-// import ChatroomInputForm from './ChatroomInputForm'
 import ChatTopicListForm from './ChatTopicListForm'
 
 export default {
     name : 'CreateChatroomForm',
     components:{
-        // ChatroomInputForm,
         ChatTopicListForm
     },
     methods:{

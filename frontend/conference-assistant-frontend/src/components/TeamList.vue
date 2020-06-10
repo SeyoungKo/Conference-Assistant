@@ -14,8 +14,8 @@
     </div>
 </template>
 <script>
-import AddTeamModal from '../components/AddTeamModal'
-import CreateTeamModal from '../components/CreateTeamModal'
+import AddTeamModal from '../modal/AddTeamModal'
+import CreateTeamModal from '../modal/CreateTeamModal'
 
 export default {
     name : 'TeamList',
