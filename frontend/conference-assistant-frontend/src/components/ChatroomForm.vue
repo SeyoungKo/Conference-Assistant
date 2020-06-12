@@ -1,10 +1,11 @@
 <template>
     <div class="chatroom-form">
         <h4 class="chat-title"><span v-if="roomname!=''">{{roomname}}</span></h4>
-        <button class="goto-minutes-btn" type="button"><router-link :to="{name:'CreateMinutesPage'}">회의록 생성</router-link></button>
+        <button class="goto-minutes-btn" type="button" v-if="roomname!=''"><router-link :to="{name:'CreateMinutesPage'}">회의록 생성</router-link></button>
+        <p class="p-alert" v-else>채팅 방을 선택하거나 생성해주세요.</p>
         <!-- <button type="button"><img src="../img/menu.png"></button> -->
          <div class="page-container">
-          <div class="textarea">
+          <div class="textarea" >
               <div class="messages" v-for="(msg, index) in messages" :key="index">
                   <div class="profile-div"><img class="profile-img" src="../img/profile.png">
                   <p class="user-name-p">user1</p></div>
@@ -235,5 +236,10 @@ a:hover{
 }
 .profile-div{
     overflow-y:scroll;
+}
+.p-alert{
+    margin-top: 30%;
+    text-align: center;
+    color:#aaaaaa;
 }
 </style>

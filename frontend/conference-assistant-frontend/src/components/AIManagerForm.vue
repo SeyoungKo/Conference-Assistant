@@ -1,9 +1,12 @@
 <template>
     <div class="aimanager-form">
         <img src="../img/ai.png">
-        <h4>회의 매니저&nbsp;&nbsp;&nbsp;<toggle-button @change="onChangeEventHandler" :value="true" :labels="{checked: 'ON', unchecked:'OFF'}"></toggle-button></h4>
+        <h4>회의 매니저&nbsp;&nbsp;&nbsp;
+            <toggle-button v-if="flag==true" @change="onChangeEventHandler" :value="true" :labels="{checked: 'ON', unchecked:'OFF'}"></toggle-button>
+            <toggle-button v-else-if="flag==false" :disabled=true :value="true" :labels="{checked: 'ON', unchecked:'OFF'}"></toggle-button>
+        </h4>
         <textarea class="textarea" disabled v-auto-scroll-bottom></textarea>
-        <div v-if="onChanged" class="welcome-div">
+        <div v-if="onChanged==true && flag==true" class="welcome-div">
                 <p> '{{ res_roomname }}' 주최자는 user1<br>참여 예정자는 user2, user3입니다.
                     <br><br>
                     오늘의 주요 안건은 {{res_topic}} 입니다.
@@ -25,6 +28,7 @@ export default {
             event : '',
             res_roomname: '',
             res_topic: '',
+            flag : false,
         }
     },
     methods : {
@@ -37,6 +41,8 @@ export default {
 
             this.res_topic = obj.info.topic
             this.res_roomname = obj.info.roomname
+
+            this.flag = true;
 
         });
     },
