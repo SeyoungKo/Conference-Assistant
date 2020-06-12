@@ -23,7 +23,8 @@
         </div>
         <div class="chat-list">
             <h5>채팅방 목록<span><button type="button" class="img-button"><img src="../img/chat_add.png" @click="showCreateChatroomForm" ></button></span></h5>
-            <CreateChatroomForm v-if="isClicked" @close="closeCreateChatroomForm"></CreateChatroomForm>
+            <div class="div-roominfo" v-for="(chatlist, index) in chatlist" :key="index">{{chatlist}}<img class="img-close" src="../img/close_white.png"/></div>
+            <CreateChatroomForm v-if="isClicked" @close="closeCreateChatroomForm" @exit="closeCreateChatroomForm"></CreateChatroomForm>
         </div>
 
 </div>
@@ -31,6 +32,7 @@
 <script>
 import ShowProfileForm from './ShowProfileForm'
 import CreateChatroomForm from './CreateChatroomForm'
+import {EventBus} from '../EventBus'
 
 export default {
     name: 'SidebarMenu',
@@ -44,7 +46,8 @@ export default {
             isActive : false,
             name : 'user1',    // sample user,
             isClicked : false,
-            isClosedOn : false
+            isClosedOn : false,
+            chatlist : []
         };
     },
     methods:{
@@ -59,6 +62,11 @@ export default {
             this.isClosedOn = !this.isClosedOn;
             this.isClicked = !this.isClicked;
         }
+    },
+    beforeMount(){
+        EventBus.$on('chatinfo',(obj)=>{
+            this.chatlist.push(obj.info.roomname);
+        });
     }
 }
 </script>
@@ -170,5 +178,19 @@ button.img-button img{
     height: 10px;
 }
 
+.div-roominfo{
+    padding-top:4px;
+    color:#ffff;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration:underline;
+    padding-left: 2rem;
+    overflow:scroll;
+}
+.img-close{
+    margin-left: 10px;
+    width:9px;
+    height:9px;
+}
 </style>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="chatroom-form">
-        <h4 class="chat-title"><span>채팅방 제목</span></h4>
+        <h4 class="chat-title"><span v-if="roomname!=''">{{roomname}}</span></h4>
         <button class="goto-minutes-btn" type="button"><router-link :to="{name:'CreateMinutesPage'}">회의록 생성</router-link></button>
         <!-- <button type="button"><img src="../img/menu.png"></button> -->
          <div class="page-container">
@@ -34,7 +34,8 @@ export default {
     data(){
         return{
             message : '',
-            messages : []
+            messages : [],
+            roomname : ''
         }
     },
     methods: {
@@ -55,6 +56,11 @@ export default {
                  });
             }
        });
+    },
+    beforeMount(){
+        EventBus.$on('chatinfo', (obj)=>{
+            this.roomname = obj.info.roomname;
+        })
     }
 }
 </script>

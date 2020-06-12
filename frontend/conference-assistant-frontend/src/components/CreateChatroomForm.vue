@@ -2,7 +2,7 @@
 <transition name="form-fade">
     <div class="create-chatroom-form">
             <h3>채팅방 생성</h3>
-            <img class="close-img" src="../img/close.png" @click="close">
+            <img class="close-img" src="../img/close.png" @click="exit">
 
             <ChatTopicListForm @submit="submit"/>
     </div>
@@ -45,6 +45,9 @@ export default {
             })
             this.$emit('close');
         },
+        exit(){
+            this.$emit('exit');
+        }
 
     }
 }

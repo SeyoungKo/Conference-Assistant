@@ -34,8 +34,7 @@ export default {
     },
     beforeMount(){
         EventBus.$on('chatinfo', (obj)=>{
-            // this.res_roomname = obj.roomname
-            // this.res_topic = obj.topic
+
             this.res_topic = obj.info.topic
             this.res_roomname = obj.info.roomname
 
