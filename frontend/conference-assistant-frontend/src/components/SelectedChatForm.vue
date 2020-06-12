@@ -27,7 +27,7 @@ export default {
         }
     },
     beforeMount(){
-        EventBus.$on('event', (obj)=>{
+    EventBus.$on('event', (obj)=>{
            this.selected_keyword = '\'' + obj.keyword + '\''
            this.info_msg = '에 대한 회의 내용입니다.'
            this.msg = obj.msg
@@ -36,7 +36,6 @@ export default {
                this.clicked = !this.clicked
            }
         })
-        // EventBus.$off('event');
     }
 }
 </script>

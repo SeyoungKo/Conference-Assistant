@@ -3,23 +3,49 @@
     <div class="create-chatroom-form">
             <h3>채팅방 생성</h3>
             <img class="close-img" src="../img/close.png" @click="close">
-            <!-- <ChatroomInputForm/> -->
-            <ChatTopicListForm @close="close"/>
+
+            <ChatTopicListForm @submit="submit"/>
     </div>
 </transition>
 </template>
 <script>
 import ChatTopicListForm from './ChatTopicListForm'
+import axios from 'axios'
+import {EventBus} from '../EventBus'
 
+// import api from '@/api'
+
+// const APIcore = axios.create({
+//     baseURL : '//localhost:8080/roominfo'
+// })
 export default {
     name : 'CreateChatroomForm',
+    data(){
+        return{
+            rtn_roomname : '',
+            rtn_topic : ''
+        }
+    },
     components:{
         ChatTopicListForm
     },
     methods:{
-        close(){
+        submit(topic, roomname){
+
+            // axios.post('http://127.0.0.1:5000/roominfo/'+ `${topics}`, topics).then(res=>{
+            //     this.rtn_input = res.data
+            // })
+
+            // this.rtn_roomname = roomname;
+            // this.rtn_topic = topic;
+
+            EventBus.$emit('chatinfo', {
+                info : topic,
+                roomname : roomname
+            })
             this.$emit('close');
-        }
+        },
+
     }
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
     <div class="aimanager-form">
         <img src="../img/ai.png">
-        <h4>회의 중재&nbsp;&nbsp;&nbsp;<toggle-button @change="onChangeEventHandler" :value="true" :labels="{checked: 'ON', unchecked:'OFF'}"></toggle-button></h4>
+        <h4>회의 매니저&nbsp;&nbsp;&nbsp;<toggle-button @change="onChangeEventHandler" :value="true" :labels="{checked: 'ON', unchecked:'OFF'}"></toggle-button></h4>
         <textarea class="textarea" disabled v-auto-scroll-bottom></textarea>
         <div v-if="onChanged" class="welcome-div">
-                <p> '1차 정기회의' 주최자는 user1<br>참여자는 user2, user3입니다.
+                <p> '{{ res_roomname }}' 주최자는 user1<br>참여 예정자는 user2, user3입니다.
                     <br><br>
-                    오늘의 주요 안건은 회의록 작성, 개발 일정 변경 입니다.
+                    오늘의 주요 안건은 {{res_topic}} 입니다.
                 </p>
                 <div v-for="(start, index) in start_msg" :key="index" >
                     <p class="start-div">{{start}}</p>
@@ -22,7 +22,9 @@ export default {
         return{
             onChanged : true,
             start_msg : '',
-            event : ''
+            event : '',
+            res_roomname: '',
+            res_topic: '',
         }
     },
     methods : {
@@ -30,12 +32,21 @@ export default {
             this.onChanged = !this.onChanged;
         }
     },
+    beforeMount(){
+        EventBus.$on('chatinfo', (obj)=>{
+            // this.res_roomname = obj.roomname
+            // this.res_topic = obj.topic
+            this.res_topic = obj.info.topic
+            this.res_roomname = obj.info.roomname
+
+        });
+    },
     mounted(){
         this.event = EventBus;
 
         this.event.$on('first', (info)=>{
             this.start_msg = info
-        })
+        });
     }
 }
 </script>

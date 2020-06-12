@@ -3,13 +3,13 @@
         <div class="added-topic-div">
             <ChatroomInputForm @addChatInfo="addChatInfo"/>
                 <ul class="topic-list">
-                    <li v-for="(t, index) in topics" :key="index">
-                        <div>{{t.topic}}</div>
+                    <li v-for="(t, index) in info" :key="index" v-bind="handleChatInfo(t.topic, t.roomname)">
+                        <div >{{t.topic}} </div>
                         <hr style="border : 1px solid #eeeeee; margin-top:15px;">
                     </li>
                 </ul>
                 <button class="ok-btn" type="button" @click="close">OK</button>
-                <createChatAlertModal v-if="isModalVisible" @btnok="closeModal"></createChatAlertModal>
+                <CreateChatAlertModal v-if="isModalVisible" @btnok="closeModal"></CreateChatAlertModal>
         </div>
     </div>
 </template>
@@ -25,22 +25,39 @@ export default {
     },
     data(){
         return{
-            topics:[],
-            r :'',
-            t : '',
-            isModalVisible : false
+            info:[],
+            isModalVisible : false,
+            roomname : '',
+            topic : ''
         };
     },
     methods:{
-        addChatInfo(topic,roomname){
-            // this.topics=[...this.topics, topic];
-            this.topics.push(topic);
-            this.t  = topic;
-            this.r = roomname;
+        //***** */
+        handleChatInfo(t,r){
+            // this.topics.push(t);
+            this.topic = t;
+            this.roomname  = r;
+        },
+        addChatInfo(payload){
+            this.info.push(payload);
+
+            // const last = this.info.slice(-1);
+
+            // for(var i=0; i<this.info.length; i++){
+            //     for(var j=0; j<this.info[i]['topic'].length; j++){
+            //         this.topics.push(this.info.roomname[i]['topic'][j]);
+            //         // this.roomname = this.info.roomname[this.info.length -1];
+            //     }
+            // }
+            // this.roomname = payload[0].roomname
         },
         close(){
-            if(this.t != '' && this.r !=''){
-                this.$emit('close')
+            if(this.topic != '' && this.roomname !=''){
+
+                this.$emit('submit', {
+                    topic : this.topic,
+                    roomname : this.roomname
+                });
             }else{
                 this.showModal()
             }

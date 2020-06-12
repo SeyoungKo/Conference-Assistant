@@ -12,8 +12,7 @@
             <p><router-link :to="{name:'TimelinePage'}">타임라인</router-link></p>
             <p><router-link :to="{name:'MinutesListPage'}">회의록</router-link></p>
             <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 회의록 목록</router-link></p>
-            <!-- <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 승인 대기중</router-link></p>
-            <p><router-link :to="{name:'Signin'}">&nbsp;&nbsp;&nbsp;&nbsp;- 승인 완료</router-link></p> -->
+
         </div>
         <hr>
         <div class="online-userlist">
