@@ -10,7 +10,7 @@
                   <div class="profile-div"><img class="profile-img" src="../img/profile.png">
                   <p class="user-name-p">user1</p></div>
                   <p><span class="font-weight-bold"></span>&nbsp;&nbsp;{{ msg.message }} </p>
-                  <p class="date">{{moment(date).format('MM-DD mm:ss')}}</p>
+                  <p class="date">{{moment().format('MM-DD HH:mm')}}</p>
               </div>
           </div>
         <div class="input_div">
@@ -27,7 +27,7 @@
     </div>
 </template>
 <script>
-import moment from 'moment';
+import moment from 'vue-moment';
 import {EventBus} from '../EventBus'
 export default {
     name: 'ChatroomForm',
@@ -61,7 +61,10 @@ export default {
     beforeMount(){
         EventBus.$on('chatinfo', (obj)=>{
             this.roomname = obj.info.roomname;
-        })
+        }),
+        EventBus.$on('clickevent', (obj)=>{
+            this.roomname = obj.roomname;
+        });
     }
 }
 </script>
@@ -69,8 +72,7 @@ export default {
 
 .chatroom-form{
    z-index:0;
-   position: fixed;
-   margin-top:1.8%;
+   margin-top:1%;
    width: 580px;
    height: 610px;
    margin-left: 17%;

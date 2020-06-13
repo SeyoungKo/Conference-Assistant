@@ -58,6 +58,7 @@ export default {
                     topic : this.topic,
                     roomname : this.roomname
                 });
+                localStorage.setItem(this.roomname, this.topic);
             }else{
                 this.showModal()
             }

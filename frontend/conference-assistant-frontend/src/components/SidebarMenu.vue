@@ -23,7 +23,10 @@
         </div>
         <div class="chat-list">
             <h5>채팅방 목록<span><button type="button" class="img-button"><img src="../img/chat_add.png" @click="showCreateChatroomForm" ></button></span></h5>
-            <div class="div-roominfo" v-for="(chatlist, index) in chatlist" :key="index">{{chatlist}}<img class="img-close" src="../img/close_white.png"/></div>
+            <div class="div-roominfo" v-for="(chatlist, index) in chatlist" :key="index" >
+                <button class="btn-chatitem" @click="showSelectedChatroom(chatlist)">{{chatlist}}</button>
+                <img @click="exitSelectedChatroom(chatlist)" class="img-close" src="../img/close_white.png"/>
+            </div>
             <CreateChatroomForm v-if="isClicked" @close="closeCreateChatroomForm" @exit="closeCreateChatroomForm"></CreateChatroomForm>
         </div>
 
@@ -61,12 +64,31 @@ export default {
         closeCreateChatroomForm(){
             this.isClosedOn = !this.isClosedOn;
             this.isClicked = !this.isClicked;
+        },
+        showSelectedChatroom(roomname){
+
+            EventBus.$emit('clickevent', {
+                roomname : roomname,
+                topic : localStorage.getItem(roomname)
+            });
+        },
+        exitSelectedChatroom(roomname){
+
+            localStorage.removeItem(roomname);
+            alert('\''+roomname+'\''+' 채팅방이 삭제되었습니다.');
+
+            // manually reload current page
+            this.$router.go(0);
         }
     },
     beforeMount(){
         EventBus.$on('chatinfo',(obj)=>{
             this.chatlist.push(obj.info.roomname);
         });
+        for(var i=0; i<localStorage.length; i++){
+            this.chatlist.push(localStorage.key(i));
+        }
+
     }
 }
 </script>
@@ -179,18 +201,19 @@ button.img-button img{
 }
 
 .div-roominfo{
-    padding-top:4px;
-    color:#ffff;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration:underline;
     padding-left: 2rem;
-    overflow:scroll;
 }
 .img-close{
     margin-left: 10px;
     width:9px;
     height:9px;
+}
+.btn-chatitem{
+    background: transparent;
+    text-decoration: underline;
+    font-size:14px;
+    color:#ffff;
+    font-weight: 500;
 }
 </style>
 
