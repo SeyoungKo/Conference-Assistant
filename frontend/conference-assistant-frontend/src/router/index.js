@@ -33,7 +33,8 @@ export default new Router({
       components:{
         header : AppHeader,
         default: TeamListPage
-      }
+      },
+      props: true
     },
     {
       path: '/',

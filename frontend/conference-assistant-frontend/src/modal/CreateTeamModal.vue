@@ -6,6 +6,7 @@
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
       >
+
         <header
           class="modal-header"
           id="modalTitle"
@@ -25,7 +26,7 @@
           id="modalDescription"
         >
           <slot name="body">
-            <input type="text" placeholder="   팀 명을 입력해주세요."/>
+            <input type="text" v-model="teamname" placeholder="   팀 명을 입력해주세요."/>
 
           </slot>
             <p class="alert-phrase">팀 명은 영문 혹은 영문 숫자를 혼합한 2~15 이내의 글자만 사용 가능합니다.</p>
@@ -33,7 +34,7 @@
         <footer class="modal-footer">
           <slot name="footer">
             <button type="button" class="btn-gray" @click="close" aria-label="Close modal">Cancle</button>
-            <button type="button" class="btn-green" @click="close" aria-label="Close modal">OK</button>
+            <button type="button" class="btn-green" @click="submit" aria-label="Close modal">OK</button>
           </slot>
         </footer>
       </div>
@@ -44,6 +45,11 @@
 <script>
   export default {
     name: 'CreateTeamModal',
+    data(){
+      return{
+        teamname : ''
+      }
+    },
     methods: {
       close() {
         this.$emit('close');
@@ -51,7 +57,9 @@
       create(){
         //  팀 생성하기 모달 창 연결
         this.$emit('close');
-
+      },
+      submit(){
+        this.$emit('submit', this.teamname);
       }
     },
   };

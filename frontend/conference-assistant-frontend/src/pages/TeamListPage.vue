@@ -1,8 +1,11 @@
 <template>
     <div class="team-list-page">
         <AppHeader/>
-        <img src="../img/profile.png"><span>user1</span>
-        <p>user1@google.com</p>
+        <img src="../img/profile.png">
+        <div class="div-info">
+            <span>user1</span>
+            <p>user1@google.com</p>
+        </div>
         <TeamList/>
     </div>
 </template>
@@ -18,22 +21,28 @@ export default {
 }
 </script>
 <style scoped>
+
 img{
-    margin-top: 10%;
-    margin-left: 20px;
+    margin-top: 110px;
+    margin-left: 27px;
+    width:93px;
+    height:93px;
+
 }
 span{
-    position: absolute;
-    margin-left: 2%;
-    margin-top: 11%;
+    margin-left: 9%;
+    margin-bottom: 4px;
+    display: inline-block;
     color:black;
     font-size: 22px;
 }
 p{
-    position: absolute;
     margin-left: 10%;
-    margin-top: -3%;
     color:black;
     font-size: medium;
+}
+.div-info{
+    display:inline-block;
+    margin-top: -14px;
 }
 </style>

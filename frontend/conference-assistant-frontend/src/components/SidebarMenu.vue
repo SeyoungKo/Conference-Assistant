@@ -1,12 +1,12 @@
 <template>
     <div class="sidebar-menu">
-        <img src="../img/dure_default.png"><router-link :to="{name:'MainPage'}" style="position:absolute;font-size:23px;font-weight:900">&nbsp;&nbsp;Team1</router-link>
+        <img src="../img/dure_default.png"><router-link :to="{name:'MainPage'}" style="position:absolute;font-size:23px;font-weight:900">&nbsp;&nbsp;{{teamname}}</router-link>
         <span><img class="drop-menu-icon" src="../img/drop_menu.png" v-on:click="showDropMenu">
         <div v-if="isStatusOn" class="drop-menu">
             Team2<hr>
             Team3<hr>
         </div></span>
-        <p>http://Team1.dure.com</p>
+        <p>http://{{teamname}}.dure.com</p>
         <div class="route-menu">
             <router-link :to="{name:'FileStoragePage'}">업무자료</router-link><p></p>
             <p><router-link :to="{name:'TimelinePage'}">타임라인</router-link></p>
@@ -43,6 +43,10 @@ export default {
       ShowProfileForm,
       CreateChatroomForm
     },
+    created(){
+      const teamname = this.$route.params.teamname;
+      this.teamname = teamname;
+    },
     data(){
         return {
             isStatusOn : false,
@@ -50,7 +54,8 @@ export default {
             name : 'user1',    // sample user,
             isClicked : false,
             isClosedOn : false,
-            chatlist : []
+            chatlist : [],
+            teamname : ''
         };
     },
     methods:{
