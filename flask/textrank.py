@@ -6,6 +6,7 @@ import app
 rtn_final =[]
 stopword =''
 kw = ''
+rtn_keyword=''
 
 class RawSentence:
     def __init__(self, textIter):
@@ -220,7 +221,7 @@ def f(t, d):
 
 def init(text):
     global kw
-
+    global rtn_keyword
     tr = TextRank(window=5, coef=0)
     sent = text
 
@@ -229,6 +230,9 @@ def init(text):
 
     tr.build()
     kw = tr.extract(1)
+    rtn_keyword = kw
+
+    kw = ''
 
 # if __name__ == '__main__':
 #     tr = TextRank()

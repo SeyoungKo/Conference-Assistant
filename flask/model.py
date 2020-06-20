@@ -1,13 +1,8 @@
 import os
 import re
-import sys
 import threading
-import csv
-import textrank
-import app
-import json
 
-from flask_socketio import SocketIO
+import textrank
 
 from numpy import matrix
 from pymongo import MongoClient
@@ -28,12 +23,14 @@ text=''
 rtn_keyword = ''
 noun_list=''
 
+
 # 쓰레드로 가져온 최근 값
 
 # DB_HOST = 'XXX.XX.XX.XXX:27017'
 # DB_ID = 'root'
 # DB_PW = 'PW'
 # client = MongoClient('mongodb://%s:%s@%s' % (DB_ID, DB_PW, DB_HOST))
+
 
 class AsyncTask:
 
@@ -42,10 +39,10 @@ class AsyncTask:
 
     def TaskA(self):
 
-        count=0
         rtn_messages = ""
         arr = [20]
-        MAX_TEXTLEN=1000
+        MAX_TEXTLEN=100
+        count =0
 
         db = client["local"]
         # db 객체 할당받기
@@ -57,9 +54,10 @@ class AsyncTask:
 
         coll_list = db.list_collection_names()
 
+
         # 채팅을 1000글자 단위로 저장한다.
-        while len(rtn_messages) <= MAX_TEXTLEN:
-            sleep(5)
+        while (1):
+            sleep(2)
 
             cursor = db.chats.find().sort([('created_at', -1)]).limit(1)
             docs = list(cursor)
@@ -74,24 +72,26 @@ class AsyncTask:
 
             count +=1
 
-        # 새로운 리스트에 누적 채팅 1000개를 만들기 위해 저장한다.
-        text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', rtn_messages)
+            if len(rtn_messages) >= MAX_TEXTLEN:
+                # 새로운 리스트에 누적 채팅 1000개를 만들기 위해 저장한다.
+                text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', rtn_messages)
 
-        tokenizer = RegexTokenizer()
+                tokenizer = RegexTokenizer()
 
-        # 명사 빈도 추출
-        textrank.init(text)
-        tr = textrank.TextRank()
-        tr.build()
-        tr.extract()
+                # 명사 빈도 추출
+                textrank.init(text)
+                tr = textrank.TextRank()
+                tr.build()
+                tr.extract()
 
-        rtn_keyword = textrank.kw
-        print("rtn_keyword:", rtn_keyword)
-
+                rtn_keyword = textrank.kw
+                print("rtn_keyword:", rtn_keyword)
+                break
 
         threading.Timer(3,self.TaskA).start()
 
 def main():
+    count =0
     at = AsyncTask()
     at.TaskA()
 
