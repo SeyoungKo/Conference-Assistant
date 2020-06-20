@@ -5,6 +5,7 @@ import threading
 import csv
 import textrank
 import app
+import json
 
 from flask_socketio import SocketIO
 
@@ -12,7 +13,7 @@ from numpy import matrix
 from pymongo import MongoClient
 
 from soynlp.tokenizer import RegexTokenizer
-from collections import Counter
+from time import sleep
 from konlpy.tag import Okt
 
 client = MongoClient()
@@ -23,9 +24,7 @@ matrix = []
 client = MongoClient('mongodb://localhost:27017/local')
 
 count =0
-tmp_data = ''
 text=''
-cnt =0
 rtn_keyword = ''
 noun_list=''
 
@@ -43,12 +42,10 @@ class AsyncTask:
 
     def TaskA(self):
 
-        global count
-        global tmp_data
-        global text
-        global cnt
-        global rtn_keyword
-        # 전역변수 사용
+        count=0
+        rtn_messages = ""
+        arr = [20]
+        MAX_TEXTLEN=1000
 
         db = client["local"]
         # db 객체 할당받기
@@ -56,63 +53,48 @@ class AsyncTask:
         chats = db["chats"]
         # db에서 collection 이름으로 객체를 생성
 
-        # post={
-        #     "id" : "mike",
-        #     "age" : 20,
-        #     "text" : "테스트 도큐먼트입니다1."
-        # }
-
         coll = db.chats
-        # users 변수에 해당하는 collection 이름으로 할당된다.
-
-        # coll.insert(post)
 
         coll_list = db.list_collection_names()
-        # collection 목록 보기
 
-        # for chats in coll.find():
-        #     rtn_chats =chats.get('contents')
-        #
-        #
-        #     print(text)
+        # 채팅을 1000글자 단위로 저장한다.
+        while len(rtn_messages) <= MAX_TEXTLEN:
+            sleep(5)
 
-        cursor = db.chats.find().sort([('created_at', -1)]).limit(1)
-        docs = list(cursor)
+            cursor = db.chats.find().sort([('created_at', -1)]).limit(1)
+            docs = list(cursor)
+            last_message = docs[0]["contents"]
+            arr.append(last_message)
 
-        for doc in docs:
-            if doc !=" " and count==0:
-                rtn_msg = doc["contents"]
+            if count>2 and arr[count-1] != arr[count]:
+                rtn_messages += last_message
 
-                tmp_data = rtn_msg
-                count += 1
+            docs.clear()
+            print(rtn_messages, len(rtn_messages), "count:", count)
 
-            elif doc !=" " and tmp_data != doc["contents"] :
-                rtn_msg = doc["contents"]
-                tmp_data = rtn_msg
+            count +=1
 
-                # print(tmp_data)
-                text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', tmp_data)
+        # 새로운 리스트에 누적 채팅 1000개를 만들기 위해 저장한다.
+        text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', rtn_messages)
 
-                tokenizer = RegexTokenizer()
+        tokenizer = RegexTokenizer()
 
-                # 명사 빈도 추출
+        # 명사 빈도 추출
+        textrank.init(text)
+        tr = textrank.TextRank()
+        tr.build()
+        tr.extract()
 
-                textrank.init(text)
-                tr = textrank.TextRank()
-                tr.build()
-                tr.extract()
+        rtn_keyword = textrank.kw
+        print("rtn_keyword:", rtn_keyword)
 
-                rtn_keyword = textrank.kw
-                print("rtn_keyword:", rtn_keyword)
-
-            count += 1
 
         threading.Timer(3,self.TaskA).start()
 
 def main():
     at = AsyncTask()
     at.TaskA()
-    count=0
+
 
 if __name__ =='__main_':
     main()
