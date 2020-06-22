@@ -1,12 +1,22 @@
 import re
 import networkx
-import model
-import app
+import pandas as pd
+# ===
+from gensim.models import word2vec;print("FAST_VERSION", word2vec.FAST_VERSION)
+import gensim; print("gensim", gensim.__version__)
 
 rtn_final =[]
 stopword =''
 kw = ''
 rtn_keyword=''
+append_words = []
+weight_list = []
+keywords_dict = {}
+
+main_words = []
+sub_words = []
+tmp = []
+rtn_appendwords = []
 
 class RawSentence:
     def __init__(self, textIter):
@@ -163,6 +173,8 @@ class TextRank:
         return networkx.pagerank(self.graph, weight='weight')
 
     def extract(self, ratio=0.1):
+        global append_words
+
         ranks = self.rank()
         cand = sorted(ranks, key=ranks.get, reverse=True)[:int(len(ranks) * ratio)]
         pairness = {}
@@ -178,7 +190,9 @@ class TextRank:
 
         for (k, l) in sorted(pairness, key=pairness.get, reverse=True):
             # print(k[0], l[0], pairness[k, l])
-            rtn_final.append(k[0] + l[0])
+            str = k[0], l[0], pairness[k, l]
+            append_words.append(str)
+            rtn_final.append(k[0]+l[0])
 
             if k not in startOf: startOf[k] = (k, l)
 
@@ -201,11 +215,7 @@ class TextRank:
         for k in sorted(tuples, key=tuples.get, reverse=True):
             if used.intersection(set(k)): continue
             both[k] = tuples[k]
-
             for w in k: used.add(w)
-
-        # for k in cand:
-        #    if k not in used or True: both[k] = ranks[k] * self.getI(k)
 
         return rtn_final
 
@@ -222,6 +232,12 @@ def f(t, d):
 def init(text):
     global kw
     global rtn_keyword
+    global main_words
+    global sub_words
+    global tmp
+    global keywords_dict
+    global rtn_appendwords
+
     tr = TextRank(window=5, coef=0)
     sent = text
 
@@ -229,10 +245,74 @@ def init(text):
     tr.load(RawTagger(sent), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP')))
 
     tr.build()
+    # 가중치 제외 append word 출력
     kw = tr.extract(1)
-    rtn_keyword = kw
 
-    kw = ''
+    # #  가중치+ 단어 저장
+    # for i in range(0, len(append_words)):
+    #     str = append_words[i][0] + append_words[i][1]
+    #     weight = append_words[i][2]
+    #     dict = {str : weight}
+    #     # 리스트에 가중치, 단어 저장
+    #     weight_list.append(dict)
+    #
+    # # 가중치값이 가장 높은 단어
+    # top_word =''.join(tuple(weight_list[0].keys()))
+    # second_word = ''.join(tuple(weight_list[int(len(weight_list)/2)].keys()))
+
+
+    for j in range(0, len(kw)):
+        if j%5 ==0 or j==0:
+            main_words.append(kw[j])
+        else:
+            tmp.append(kw[j])
+
+    i =0
+    count =1
+    last_idx = 0
+
+    num = int(len(tmp)/ len(main_words))
+
+    # main : sub
+    for k in range(0, len(main_words)):
+        arr = []
+        for l in range(last_idx+i, num*count):
+            arr.append(tmp[l])
+        sub_words.append(arr)
+
+        last_idx = num*count
+        count +=1
+        i+=1
+
+
+    # [{'mainword' :['sub1','sub2'...]}, {'mainword2':['sub1','sub2'...]}
+    for i in range(0, len(main_words)):
+        keywords_dict = {main_words[i] : sub_words[i]}
+        rtn_appendwords.append(keywords_dict)
+
+    print("tmp : ", tmp)
+    print("sub words : ", len(sub_words),sub_words, )
+    print("main words : ", len(main_words), main_words)
+    print("sub+main_dict :",len(rtn_appendwords), rtn_appendwords)
+    # {main tag : (sub word, subword...)}
+
+
+    # rtn_messages to csv
+    # df = []
+    # df.append(text)
+
+    # dataframe = pd.DataFrame(df)
+    # dataframe.to_csv("/Users/seyoung/Conference-Assistant/Conference-Assistant/flask/sentences/text_sentences.csv",
+    #                  header=False, index=False)
+
+
+    rtn_keyword = kw
+    print("rtn_keyword:", rtn_keyword, "type:", type(rtn_keyword))
+
+    # 모델 호출
+    # word2vec.create_model(top_word)
+
+    kw=''
 
 # if __name__ == '__main__':
 #     tr = TextRank()

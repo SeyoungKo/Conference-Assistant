@@ -10,7 +10,9 @@ var bodyParser = require('body-parser')
    ,errorHandler = require('errorhandler');
 
 var server = require('http').createServer(app);
+
 var io = require('socket.io')(server);
+var namespace_chat = io.of('/chat'); // namespace 설정
 var cors = require('cors');
 
 // 에러 핸들러 모듈
@@ -39,6 +41,18 @@ var ChatModel = require('./database/chat_schema');
 
 var app = express();
 
+// === router ===
+// var roominfo = require('./router/roominfo.js');
+// app.post('/roominfo', roominfo);
+
+app.post('/roominfo', function(req,res){
+    var topic = req.body.topics;
+    console.log( topic);
+    console.log("아아아아ㅏ");
+    return res.status(200).json(req.topics);
+});
+
+
 // 서버 변수 설정 및 public 폴더 설정
 app.set('port', process.env.PORT || 8080);
 
@@ -63,7 +77,6 @@ app.use(expressSession({
 
 // cors를 미들웨어로 사용하도록 등록
 app.use(cors());
-
 
 // 404 에러페이지 처리
 var errorHandler = expressErrorHandler({
@@ -169,7 +182,7 @@ app.get('/', function(req, res) {
 });
 
 //connection event handler
-io.on('connection' , function(socket) {
+namespace_chat.on('connection' , function(socket) {
         console.log('Connect from Client: '+socket)
 
         socket.on('SEND_MESSAGE', function(data){
@@ -183,7 +196,7 @@ io.on('connection' , function(socket) {
         // send message to client
         console.log("type:" + typeof(data));
 
-        io.emit('MESSAGE', data);
+        namespace_chat.emit('MESSAGE', data);
             if(database && msg != ''){
                 chat.addChat(database,'test sender', msg, function(err,result){
                     if(err){
@@ -211,7 +224,7 @@ io.on('connection' , function(socket) {
         }
     });
 
-    server.listen(8080,function() {
+server.listen(8080,function() {
 
     // 데이터베이스 connect() 호출
     database.init(app, config);

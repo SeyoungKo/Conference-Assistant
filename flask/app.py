@@ -23,13 +23,15 @@ def GET(keyword):
     req_keyword = keyword
     rtn_msgs =database.selected_chat(req_keyword)
 
+
     return jsonify(rtn_msgs)
 
 @socketio.on('connect', namespace='/corekeyword') # namespace : 연결할 socket 식별
 def connect():
     tmp = ''
-    if textrank.rtn_keyword!= '' and tmp != textrank.rtn_keyword:
-        emit("response", {'message':'Connected', 'keyword':textrank.rtn_keyword, 'room_idx': '1'}) # socket 연결시 room_idx를 확인한다
+    if textrank.rtn_keyword!= '' and tmp != textrank.rtn_keyword and textrank.sub_words !='':
+
+        emit("response", {'message':'Connected', 'keyword':textrank.rtn_keyword, 'subwords':textrank.sub_words,'room_idx': '1'}) # socket 연결시 room_idx를 확인한다
         tmp = textrank.rtn_keyword
 
         @socketio.on('disconnect', namespace='/corekeyword')
@@ -37,8 +39,8 @@ def connect():
             session.clear()
             print("Socket Disconnected")
 
-        disconnect()
-\
+        # disconnect()
+
 @socketio.on("request", namespace='/coreKeyword')
 def request(rtn_keyword):
     emit("response", {'message': model.rtn_keyword,'room_idx':'1'}, broadcast=True)

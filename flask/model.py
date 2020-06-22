@@ -1,6 +1,8 @@
 import os
 import re
 import threading
+import pandas as pd
+import word2vec
 
 import textrank
 
@@ -10,6 +12,9 @@ from pymongo import MongoClient
 from soynlp.tokenizer import RegexTokenizer
 from time import sleep
 from konlpy.tag import Okt
+
+import datetime
+
 
 client = MongoClient()
 # 클래스 객체 할당
@@ -23,14 +28,10 @@ text=''
 rtn_keyword = ''
 noun_list=''
 
-
-# 쓰레드로 가져온 최근 값
-
 # DB_HOST = 'XXX.XX.XX.XXX:27017'
 # DB_ID = 'root'
 # DB_PW = 'PW'
 # client = MongoClient('mongodb://%s:%s@%s' % (DB_ID, DB_PW, DB_HOST))
-
 
 class AsyncTask:
 
@@ -41,7 +42,7 @@ class AsyncTask:
 
         rtn_messages = ""
         arr = [20]
-        MAX_TEXTLEN=100
+        MAX_TEXTLEN=500
         count =0
 
         db = client["local"]
@@ -57,7 +58,7 @@ class AsyncTask:
 
         # 채팅을 1000글자 단위로 저장한다.
         while (1):
-            sleep(2)
+            sleep(3)
 
             cursor = db.chats.find().sort([('created_at', -1)]).limit(1)
             docs = list(cursor)
@@ -85,7 +86,8 @@ class AsyncTask:
                 tr.extract()
 
                 rtn_keyword = textrank.kw
-                print("rtn_keyword:", rtn_keyword)
+                # print("rtn_keyword:", rtn_keyword)
+
                 break
 
         threading.Timer(3,self.TaskA).start()
@@ -98,16 +100,4 @@ def main():
 
 if __name__ =='__main_':
     main()
-# res = json.dumps(chats, default=str)
-# json 직렬화 (serialize)
-
-# chats collection에서 불러온 json타입 데이터에서 contents 문자열 가져오기
-
-# def cleanText(rtn_chats):a
-#     for msg in (str)(rtn_chats.values()):
-#         text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '',msg)
-#         print(text)
-#         return text
-
-# cleanText(chats)
 
