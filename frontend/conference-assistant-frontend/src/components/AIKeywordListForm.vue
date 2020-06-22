@@ -4,6 +4,8 @@
          <div v-if="keywords && keywords.length >0">
             <div class="keywords" v-for="(keyword, index) in rtn_keywords" :key="index" v-on:click="handleSelectedKeyword(keyword, index)" >
                 <button class="btn-item" >{{keyword}}</button>
+                <template v-if="click_obj.idx == index"><br>{{click_obj.item}}</template>
+                <template v-else></template>
             </div>
          </div>
          <div v-if="keywords && keywords.length ==0">
@@ -30,7 +32,13 @@ export default {
             socket : null,
             keyword : '',
             rtn_keywords : [],
-            rtn_chatdata : ''
+            rtn_chatdata : '',
+            subwords : [],
+            rtn_subwords : [],
+            click_obj : {
+                idx : '',
+                item : []
+            }
         }
     },
     props:{
@@ -48,13 +56,15 @@ export default {
             this.socket.on('response', (data)=>{
                 if(data.room_idx.length !=0){
                 this.keywords = [...this.keywords,data];
-
-                this.doMath(this.keywords);
+                this.subwords = [...this.subwords,data];
+                this.doMath(this.keywords, this.subwords);
               }
             })
         },
-        doMath(keywords){
+        doMath(keywords, subwords){
             var arr = new Array();
+            var arr2 = new Array();
+            var tmp_arr = new Array();
 
             if(this.keywords != ''){
                 for(var i=0; i<this.keywords.length; i++){
@@ -67,7 +77,17 @@ export default {
                             this.rtn_keywords = filteredArray;
                       }
                  }
-                return this.rtn_keywords;
+            }
+            if(this.subwords !=''){
+                for(var i=0; i<this.subwords.length; i++){
+                    for(var j=0; j<this.subwords[i]['subwords'].length; j++){
+                        arr2= this.subwords[i]['subwords'][j];
+
+                        tmp_arr.push(arr2);
+                    }
+                    this.rtn_subwords = tmp_arr;
+                }
+
             }
         },
         handleSelectedKeyword(keyword, index){
@@ -76,6 +96,11 @@ export default {
 
                 // return data
                  this.rtn_chatdata = res.data
+
+                 if(this.rtn_subwords!=''){
+                     this.click_obj.idx = index
+                     this.click_obj.item = this.rtn_subwords[index]
+                 }
             });
                EventBus.$emit('event', {
                    keyword : keyword,
