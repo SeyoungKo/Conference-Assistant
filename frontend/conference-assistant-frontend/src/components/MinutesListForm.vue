@@ -8,48 +8,46 @@
         </select>
         <!-- sample data -->
         <div class="minutes-list">
-            <div class="minutes-item"><p class="chatname-p">1차 정기회의 #1</p>
-                <p class="content-p">화면 UI에 따른 스토리보드 </p>
-                <p class="sub-content-p">승인 완료 2019.09.17</p>
-            </div>
-             <div class="minutes-item"><p class="chatname-p">2차 정기회의 #1</p>
-                <p class="content-p">전공종합설계(2) 발표 준비 </p>
-                <p class="sub-content-p">승인 완료 2020.03.20</p>
+            <div class="minutes-item"><p class="chatname-p">{{roomname}} #1</p>
+                <p class="content-p">{{title}} </p>
+                <p class="sub-content-p">&nbsp;&nbsp;&nbsp;&nbsp;생성일 : {{moment().format('MM-DD HH:mm')}}</p>
             </div>
         </div>
         <!--  -->
         <div class="clicked-minutes">
             <button class="delete-btn" type="text">삭제</button>
             <div class="clicked-contents-div">
-                <h2>회의명 : 1차 정기회의 #1</h2>
-                <h2 class="agenda-h2">회의 안건 :</h2><span>  화면 UI에 따른 스토리보드</span>
-                <h2>회의 일시 : 2019년 09월 17일 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h2>회의명 : {{roomname}}&nbsp;#1</h2>
+                <h2 class="agenda-h2">회의 안건 :</h2><span>{{title}}</span>
+                <h2>회의 일시 : {{moment().format('YYYY년 MM월 DD일')}}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;13:00-14:00</h2>
                 <hr>
-                <textarea>1. 화면 UI 설계 방향
-
-            1.1 채팅방 기능
-                     - 파일 공유는 채팅창 내에서만 일어남
-                     - AI) 채팅 내용과 주제에 맞는 키워드 분류
-
-            1.2 공유된 파일 처리 방향
-                     - 채팅방 단위로 목록 생성
-
-            1.3 회의록 생성
-                     - 회의록 목록, 승인 대기, 승인 완료로 구분
-
- 2. 일정
-                     2.1 최종 보고서 작성 : ~12월 15일
-                     2.2 최종 발표 피피티 : ~12월 20일
-                </textarea>
+                <textarea>{{contents}}</textarea>
             </div>
         </div>
 
     </div>
 </template>
 <script>
+import moment from 'vue-moment'
 export default {
-    name : 'MinutesListForm'
+    name : 'MinutesListForm',
+    created(){
+        const title = this.$route.params.info.title;
+        const contents = this.$route.params.info.contents;
+        const roomname = this.$route.params.info.roomname;
+
+        this.title = title;
+        this.contents = contents;
+        this.roomname = roomname;
+    },
+    data(){
+        return{
+            title :'',
+            contents:'',
+            roomname : ''
+        }
+    }
 }
 </script>
 <style scoped>

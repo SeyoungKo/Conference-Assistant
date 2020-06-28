@@ -9,51 +9,41 @@
 				<ul class="">
 					<li>
 						<strong style="margin-top:20px;font-size:18px;">&nbsp;&nbsp;&nbsp;회의명 :</strong>
-						<span style="margin-top:20px; font-size:16px;">&nbsp;&nbsp;3차 정기회의</span>
+						<span style="margin-top:20px; font-size:16px;">&nbsp;&nbsp;{{minutes.roomname}}</span>
 					</li>
 					<li>
 						<strong style="font-size:18px;">&nbsp;&nbsp; 회의 안건 :</strong>
 						<span>
-							<input type="text" title="" name="" id="" placeholder="회의 안건을 입력하세요." style="margin-top:-5px;"value="" />
+							<input type="text" title="" name="" id="" placeholder="회의 안건을 입력하세요." style="margin-top:-5px;" value="" v-model="minutes.title" />
 						</span>
 					</li>
 					<li>
 						<strong style="font-size:18px;">&nbsp;&nbsp;&nbsp;회의 일시 :</strong>
-						<span>&nbsp;&nbsp;&nbsp;2019년 12월 16일 (월)<br/>&nbsp;&nbsp;13:00 ~ 14:00</span>
+						<span >&nbsp;&nbsp;&nbsp;{{moment().format('YYYY년 MM월 DD일')}}<br/>&nbsp;&nbsp;</span>
 					</li>
 					<li>
                         <br><br>
-						<textarea placeholder="    회의록 내용을 입력하세요."></textarea>
+						<textarea placeholder="    회의록 내용을 입력하세요." v-model="minutes.contents"></textarea>
 					</li>
 				</ul>
-				<button type="button" class="btn_wan" style="height:43px; font-weight:700;">완료</button>
+				<button type="button" class="btn_wan" style="height:43px; font-weight:700;" @click="submit">완료</button>
 			</div>
 			<div class="right_div">
 				<div class="top_box">
 					<h2 class="AIkeyword_h2" style="font-size:22px; margin-top:-15px;"><strong style="font-weight:bold;">AI</strong>가 찾은 키워드</h2>
-					<ul class="">
-						<li>
-							<a href="#">▷ 인공지능</a>
-						</li>
-						<li class="on">
-							<a href="#">▽ 산학협동</a>
-							<ul class="">
-								<li>화면 ui 설계</li>
-								<li>최종 보고서 발표 준비</li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">▷ 스터디</a>
-						</li>
-					</ul>
+					<div v-for="(rst, index) in rst_keywords" :key="index">
+						{{rst}}
+					</div>
+
 				</div>
 				<div class="bot_box">
 					<p>
-						<p style="font-weight:700; font-size:19px;"><strong>'산학협동'</strong>에 대한 회의 요약입니다.</p><br/><br/>
-						채팅창 화면이 메인. 파일공유 ui, 파일리스트 ui, 회의록 생성 ui<br/><br/>
+						<p style="font-weight:700; font-size:19px;"><strong>{{minutes.roomname}}</strong>에 대한 회의 요약입니다.</p><br/><br/>
+						<!-- 채팅창 화면이 메인. 파일공유 ui, 파일리스트 ui, 회의록 생성 ui<br/><br/>
 						채팅창 기능 확정. 채팅창 내에서 파일의 공유가 일어나. 파일을 모아두는 창. 채팅방 단위로. 쌓이는 파일.<br/>
 						인공지능이 주제에 따른. 키워드를 분류하는. <br/><br/>
-						최종보고서 작성은. 12월 15일까지. 발표 피피티는. 12월 20일까지
+						최종보고서 작성은. 12월 15일까지. 발표 피피티는. 12월 20일까지 -->
+						{{summary_text}}
 					</p>
 				</div>
 			</div>
@@ -62,8 +52,42 @@
 	</div>
 </template>
 <script>
+import moment from 'vue-moment';
+import {EventBus} from '../EventBus';
 export default {
-    name: 'CreateMinutesForm'
+	name: 'CreateMinutesForm',
+	created(){
+		const roomname = this.$route.params.roomname;
+		this.minutes.roomname = roomname;
+	},
+	data(){
+		return{
+			minutes:{
+					title : '',
+					date:'',
+					contents : '',
+					roomname : '',
+				},
+			rst_keywords : '',
+			summary_text : ''
+		}
+	},
+	methods:{
+		submit(){
+			EventBus.$emit('addEvent',{
+				add : '1'
+			});
+			this.$router.push({name:'MinutesListPage', params:{info : this.minutes}});
+		}
+	},
+	mounted(){
+		EventBus.$on('event',(obj)=>{
+			this.rst_keywords = obj.rtn_keywords
+		});
+		EventBus.$on('summary',(obj)=>{
+			this.summary_text = obj.summary
+		})
+	}
 }
 </script>
 <style scoped>

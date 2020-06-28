@@ -68,9 +68,9 @@ export default {
 
             if(this.keywords != ''){
                 for(var i=0; i<this.keywords.length; i++){
-                    for(var j=0; j<this.keywords[i]['keyword'].length; j++){
+                    for(var j=0; j<this.keywords[i]['mainwords'].length; j++){
 
-                            arr= arr.concat(this.keywords[i]['keyword'][j]);
+                            arr= arr.concat(this.keywords[i]['mainwords'][j]);
                             let filteredArray = arr.filter((item, index)=> // 중복 제거
                                 arr.indexOf(item) === index
                             );
@@ -104,7 +104,8 @@ export default {
             });
                EventBus.$emit('event', {
                    keyword : keyword,
-                   msg : this.rtn_chatdata
+                   msg : this.rtn_chatdata,
+                   rtn_keywords : this.rtn_keywords
                });
         }
     },

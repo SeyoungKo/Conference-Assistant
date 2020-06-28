@@ -1,7 +1,7 @@
 <template>
     <div class="chatroom-form">
         <h4 class="chat-title"><span v-if="roomname!=''">{{roomname}}</span></h4>
-        <button class="goto-minutes-btn" type="button" v-if="roomname!=''"><router-link :to="{name:'CreateMinutesPage'}">회의록 생성</router-link></button>
+        <button class="goto-minutes-btn" type="button" @click="checkNullMessages()" v-if="roomname!=''"><router-link :to="{name:'CreateMinutesPage', params:{roomname : roomname}}">회의록 생성</router-link></button>
         <p class="p-alert" v-else>채팅 방을 선택하거나 생성해주세요.</p>
         <!-- <button type="button"><img src="../img/menu.png"></button> -->
          <div class="page-container">
@@ -29,6 +29,8 @@
 <script>
 import moment from 'vue-moment';
 import {EventBus} from '../EventBus'
+import axios from 'axios';
+
 export default {
     name: 'ChatroomForm',
 
@@ -36,7 +38,8 @@ export default {
         return{
             message : '',
             messages : [],
-            roomname : ''
+            roomname : '',
+            rtn_summary:''
         }
     },
     methods: {
@@ -45,6 +48,23 @@ export default {
                 message: this.message
             });
             this.message = ''
+        },
+        checkNullMessages(){
+            if(this.messages.length<1){
+                alert('회의를 먼저 진행해주세요.');
+                return;
+            }
+            else{
+                axios.get('http://127.0.0.1:5000/summary').then(res=>{
+
+                    // return data
+                    this.rtn_summary = res.data
+                     EventBus.$emit('summary',{
+                         summary : this.rtn_summary
+                     });
+                });
+
+            }
         }
     },
     mounted(){
@@ -174,7 +194,7 @@ input[type="text"]{
 }
 .messages{
     width:50%;
-    height:65px;
+    /* height:65px;  */
     padding-top:22px;
     margin-left:40px;
     font-size:14px;
