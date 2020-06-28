@@ -7,11 +7,12 @@ from flask_socketio import SocketIO, emit
 import database
 import model
 import textrank
+import summarizer
 
 req_keyword = ''
 
 app = Flask(__name__)
-socketio = SocketIO(app, ping_timeout=2, cors_allowed_origins="*")
+socketio = SocketIO(app, ping_timeout=10, cors_allowed_origins="*")
 
 cors = CORS(app, resources={r"/foo": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -23,15 +24,28 @@ def GET(keyword):
     req_keyword = keyword
     rtn_msgs =database.selected_chat(req_keyword)
 
-
     return jsonify(rtn_msgs)
+
+# 텍스트 요약
+@app.route('/summary')
+@cross_origin(origin='*', headers={'Content-Type', 'Authorization'})
+def GET_TEXT():
+    rtn_summary = ''
+
+    summarizer.m()
+    print(summarizer.summary_text)
+
+    if summarizer.summary_text != '':
+         rtn_summary= summarizer.summary_text
+
+    return rtn_summary
 
 @socketio.on('connect', namespace='/corekeyword') # namespace : 연결할 socket 식별
 def connect():
     tmp = ''
-    if textrank.rtn_keyword!= '' and tmp != textrank.rtn_keyword and textrank.sub_words !='':
+    if textrank.rtn_keyword!= '' and tmp != textrank.main_words and textrank.sub_words !='':
 
-        emit("response", {'message':'Connected', 'keyword':textrank.rtn_keyword, 'subwords':textrank.sub_words,'room_idx': '1'}) # socket 연결시 room_idx를 확인한다
+        emit("response", {'message':'Connected', 'mainwords':textrank.main_words, 'subwords':textrank.sub_words,'room_idx': '1'}) # socket 연결시 room_idx를 확인한다
         tmp = textrank.rtn_keyword
 
         @socketio.on('disconnect', namespace='/corekeyword')
